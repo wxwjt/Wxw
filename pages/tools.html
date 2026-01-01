@@ -1,0 +1,2689 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具集 - 实用工具与游戏平台</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- GSAP 动画库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- AOS 滚动动画 -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <!-- Highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- 主样式文件 -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 min-h-screen grid-bg">
+    <!-- 导航栏 -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50 bg-glass">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-wrench text-2xl text-primary"></i>
+                <span class="text-xl font-bold text-gradient">工具总和</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="../index.html" class="nav-link">首页</a>
+                <a href="tools.html" class="nav-link active">工具集</a>
+                <a href="snake-game.html" class="nav-link">贪吃蛇游戏</a>
+                <a href="about.html" class="nav-link">关于我们</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="btn btn-icon btn-ghost" title="切换主题">
+                    <i class="fa fa-moon-o"></i>
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden btn btn-icon btn-ghost">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 移动端菜单 -->
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-wrench text-2xl text-primary"></i>
+                <span class="text-xl font-bold text-gradient">工具总和</span>
+            </div>
+            <button id="close-menu-btn" class="btn btn-icon btn-ghost">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-4">
+            <a href="../index.html" class="btn btn-lg btn-block btn-outline">首页</a>
+            <a href="tools.html" class="btn btn-lg btn-block btn-outline">工具集</a>
+            <a href="snake-game.html" class="btn btn-lg btn-block btn-outline">贪吃蛇游戏</a>
+            <a href="about.html" class="btn btn-lg btn-block btn-outline">关于我们</a>
+        </div>
+    </div>
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+
+    <!-- 页面标题 -->
+    <section class="page-header pt-32 pb-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6" data-aos="fade-up">
+                <span class="text-gradient">工具集</span>
+            </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                探索我们精心打造的实用工具集合，提升工作效率，释放创造力。
+                所有工具均支持离线使用，完全免费。
+            </p>
+        </div>
+    </section>
+
+    <!-- 工具筛选 -->
+    <section class="tool-filters py-8 bg-white/50 backdrop-blur-sm sticky top-16 z-40 border-b border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap gap-4 justify-center">
+                <button class="tool-filter btn btn-primary active" data-category="all">
+                    <i class="fa fa-th-large mr-2"></i> 全部工具
+                </button>
+                <button class="tool-filter btn btn-secondary" data-category="development">
+                    <i class="fa fa-code mr-2"></i> 开发工具
+                </button>
+                <button class="tool-filter btn btn-secondary" data-category="design">
+                    <i class="fa fa-paint-brush mr-2"></i> 设计工具
+                </button>
+                <button class="tool-filter btn btn-secondary" data-category="productivity">
+                    <i class="fa fa-cogs mr-2"></i> 效率工具
+                </button>
+                <button class="tool-filter btn btn-secondary" data-category="converter">
+                    <i class="fa fa-exchange mr-2"></i> 转换工具
+                </button>
+                <button class="tool-filter btn btn-secondary" data-category="security">
+                    <i class="fa fa-shield mr-2"></i> 安全工具
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工具内容 -->
+    <main class="container mx-auto px-4 py-16">
+        <!-- 代码格式化工具 -->
+        <section id="code-formatter" class="tool-container glass" data-category="development" data-aos="fade-up">
+            <div class="tool-header">
+                <div class="tool-icon">
+                    <i class="fa fa-code"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">代码格式化工具</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    支持多种编程语言的代码格式化和压缩，让您的代码更加整洁易读。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- 输入区域 -->
+                <div>
+                    <div class="mb-4">
+                        <label class="form-label">选择语言</label>
+                        <div class="btn-group">
+                            <button class="code-lang btn btn-primary active" data-lang="javascript">JavaScript</button>
+                            <button class="code-lang btn btn-secondary" data-lang="html">HTML</button>
+                            <button class="code-lang btn btn-secondary" data-lang="css">CSS</button>
+                            <button class="code-lang btn btn-secondary" data-lang="json">JSON</button>
+                            <button class="code-lang btn btn-secondary" data-lang="python">Python</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="code-input" class="form-label">输入代码</label>
+                        <div class="code-editor">
+                            <div class="code-editor-header">
+                                <div class="code-editor-dot red"></div>
+                                <div class="code-editor-dot yellow"></div>
+                                <div class="code-editor-dot green"></div>
+                                <span class="code-editor-language">JavaScript</span>
+                            </div>
+                            <textarea id="code-input" class="code-editor-content" placeholder="请输入要格式化的代码..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button id="format-btn" class="btn btn-primary">
+                            <i class="fa fa-indent mr-2"></i> 格式化
+                        </button>
+                        <button id="minify-btn" class="btn btn-secondary">
+                            <i class="fa fa-compress mr-2"></i> 压缩
+                        </button>
+                        <button id="clear-code-btn" class="btn btn-secondary">
+                            <i class="fa fa-trash mr-2"></i> 清空
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 输出区域 -->
+                <div>
+                    <div class="mb-4">
+                        <label for="code-output" class="form-label">格式化结果</label>
+                        <div class="code-editor">
+                            <div class="code-editor-header">
+                                <div class="code-editor-dot red"></div>
+                                <div class="code-editor-dot yellow"></div>
+                                <div class="code-editor-dot green"></div>
+                                <span class="code-editor-language">格式化结果</span>
+                            </div>
+                            <textarea id="code-output" class="code-editor-content" readonly placeholder="格式化后的代码将显示在这里..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button id="copy-code-btn" class="btn btn-success">
+                            <i class="fa fa-copy mr-2"></i> 复制结果
+                        </button>
+                        <button id="download-code-btn" class="btn btn-info">
+                            <i class="fa fa-download mr-2"></i> 下载代码
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 像素艺术生成器 -->
+        <section id="pixel-art-generator" class="tool-container glass" data-category="design" data-aos="fade-up">
+            <div class="tool-header">
+                <div class="tool-icon">
+                    <i class="fa fa-paint-brush"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">像素艺术生成器</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    创建精美的像素艺术作品，支持多种绘图工具和颜色选择。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- 工具面板 -->
+                <div>
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">绘图工具</h3>
+                        <div class="pixel-tools">
+                            <button class="pixel-tool active" data-tool="pencil" title="铅笔">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            <button class="pixel-tool" data-tool="eraser" title="橡皮擦">
+                                <i class="fa fa-eraser"></i>
+                            </button>
+                            <button class="pixel-tool" data-tool="fill" title="填充">
+                                <i class="fa fa-tint"></i>
+                            </button>
+                            <button class="pixel-tool" data-tool="rectangle" title="矩形">
+                                <i class="fa fa-square-o"></i>
+                            </button>
+                            <button class="pixel-tool" data-tool="circle" title="圆形">
+                                <i class="fa fa-circle-o"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">画布设置</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="canvas-width" class="form-label">宽度 (像素)</label>
+                                <input type="number" id="canvas-width" class="form-input" value="16" min="8" max="64">
+                            </div>
+                            <div>
+                                <label for="canvas-height" class="form-label">高度 (像素)</label>
+                                <input type="number" id="canvas-height" class="form-input" value="16" min="8" max="64">
+                            </div>
+                            <div>
+                                <label for="pixel-size" class="form-label">像素大小</label>
+                                <input type="number" id="pixel-size" class="form-input" value="20" min="5" max="50">
+                            </div>
+                            <button id="resize-canvas-btn" class="btn btn-primary btn-block">
+                                <i class="fa fa-refresh mr-2"></i> 调整画布大小
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">颜色选择</h3>
+                        <div class="pixel-color-picker" id="color-picker">
+                            <!-- 颜色选择器将动态生成 -->
+                        </div>
+                        <div class="mt-4">
+                            <label for="custom-color" class="form-label">自定义颜色</label>
+                            <div class="flex gap-2">
+                                <input type="color" id="custom-color" class="form-input" value="#000000">
+                                <button id="add-color-btn" class="btn btn-primary">添加</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button id="clear-canvas-btn" class="btn btn-secondary">
+                            <i class="fa fa-trash mr-2"></i> 清空画布
+                        </button>
+                        <button id="export-pixel-btn" class="btn btn-success">
+                            <i class="fa fa-download mr-2"></i> 导出图片
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 画布区域 -->
+                <div class="lg:col-span-2">
+                    <div class="flex justify-center bg-white rounded-lg p-8 border-2 border-dashed border-gray-300">
+                        <canvas id="pixel-canvas" class="pixel-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 科学计算器 -->
+        <section id="scientific-calculator" class="tool-container glass" data-category="productivity" data-aos="fade-up">
+            <div class="tool-header">
+                <div class="tool-icon">
+                    <i class="fa fa-calculator"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">科学计算器</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    功能强大的科学计算器，支持复杂数学运算和函数计算。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- 计算器主体 -->
+                <div class="lg:col-span-2">
+                    <div class="bg-gray-900 rounded-xl p-6 shadow-2xl">
+                        <!-- 显示屏 -->
+                        <div class="mb-6">
+                            <input type="text" id="calc-display" class="w-full bg-gray-800 text-white text-right text-2xl p-4 rounded-lg border-2 border-gray-700 focus:border-primary focus:outline-none" readonly>
+                        </div>
+                        
+                        <!-- 按钮网格 -->
+                        <div class="grid grid-cols-5 gap-3">
+                            <!-- 第一行 -->
+                            <button class="calc-btn btn btn-secondary" data-value="clear">C</button>
+                            <button class="calc-btn btn btn-secondary" data-value="backspace">⌫</button>
+                            <button class="calc-btn btn btn-secondary" data-value="%">%</button>
+                            <button class="calc-btn btn btn-secondary" data-value="^">x^y</button>
+                            <button class="calc-btn btn btn-secondary" data-value="/">÷</button>
+                            
+                            <!-- 第二行 -->
+                            <button class="calc-btn btn btn-primary" data-value="sin">sin</button>
+                            <button class="calc-btn btn btn-primary" data-value="cos">cos</button>
+                            <button class="calc-btn btn btn-primary" data-value="tan">tan</button>
+                            <button class="calc-btn btn btn-primary" data-value="log">log</button>
+                            <button class="calc-btn btn btn-secondary" data-value="*">×</button>
+                            
+                            <!-- 第三行 -->
+                            <button class="calc-btn btn btn-primary" data-value="asin">asin</button>
+                            <button class="calc-btn btn btn-primary" data-value="acos">acos</button>
+                            <button class="calc-btn btn btn-primary" data-value="atan">atan</button>
+                            <button class="calc-btn btn btn-primary" data-value="ln">ln</button>
+                            <button class="calc-btn btn btn-secondary" data-value="-">-</button>
+                            
+                            <!-- 第四行 -->
+                            <button class="calc-btn btn btn-primary" data-value="sqrt">√</button>
+                            <button class="calc-btn btn btn-primary" data-value="pow2">x²</button>
+                            <button class="calc-btn btn btn-primary" data-value="pow3">x³</button>
+                            <button class="calc-btn btn btn-primary" data-value="exp">e^x</button>
+                            <button class="calc-btn btn btn-secondary" data-value="+">+</button>
+                            
+                            <!-- 第五行 -->
+                            <button class="calc-btn btn btn-primary" data-value="pi">π</button>
+                            <button class="calc-btn btn btn-primary" data-value="e">e</button>
+                            <button class="calc-btn btn btn-primary" data-value="factorial">n!</button>
+                            <button class="calc-btn btn btn-primary" data-value="abs">|x|</button>
+                            <button class="calc-btn btn btn-success" data-value="=">=</button>
+                            
+                            <!-- 第六行 -->
+                            <button class="calc-btn btn btn-secondary col-span-2" data-value="(">(</button>
+                            <button class="calc-btn btn btn-secondary col-span-2" data-value=")">)</button>
+                            <button class="calc-btn btn btn-success" data-value="=">=</button>
+                            
+                            <!-- 第七行 -->
+                            <button class="calc-btn btn btn-secondary" data-value="7">7</button>
+                            <button class="calc-btn btn btn-secondary" data-value="8">8</button>
+                            <button class="calc-btn btn btn-secondary" data-value="9">9</button>
+                            <button class="calc-btn btn btn-primary" data-value="floor">⌊x⌋</button>
+                            <button class="calc-btn btn btn-primary" data-value="ceil">⌈x⌉</button>
+                            
+                            <!-- 第八行 -->
+                            <button class="calc-btn btn btn-secondary" data-value="4">4</button>
+                            <button class="calc-btn btn btn-secondary" data-value="5">5</button>
+                            <button class="calc-btn btn btn-secondary" data-value="6">6</button>
+                            <button class="calc-btn btn btn-primary" data-value="round">⌊x⌉</button>
+                            <button class="calc-btn btn btn-primary" data-value="base">进制</button>
+                            
+                            <!-- 第九行 -->
+                            <button class="calc-btn btn btn-secondary" data-value="1">1</button>
+                            <button class="calc-btn btn btn-secondary" data-value="2">2</button>
+                            <button class="calc-btn btn btn-secondary" data-value="3">3</button>
+                            <button class="calc-btn btn btn-secondary col-span-2" data-value="0">0</button>
+                            
+                            <!-- 第十行 -->
+                            <button class="calc-btn btn btn-secondary" data-value="00">00</button>
+                            <button class="calc-btn btn btn-secondary" data-value=".">.</button>
+                            <button class="calc-btn btn btn-secondary" data-value="±">±</button>
+                            <button class="calc-btn btn btn-primary" data-value="history">历史</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 计算历史 -->
+                <div>
+                    <div class="bg-white rounded-xl p-6 shadow-lg h-full">
+                        <h3 class="text-lg font-bold mb-4 flex items-center">
+                            <i class="fa fa-history mr-2 text-primary"></i> 计算历史
+                        </h3>
+                        <div id="calc-history" class="space-y-3 max-h-96 overflow-y-auto">
+                            <div class="text-center text-gray-500 py-8">
+                                <i class="fa fa-info-circle text-2xl mb-2"></i>
+                                <p>暂无计算历史</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 二维码生成器 -->
+        <section id="qr-code-generator" class="tool-container glass" data-category="productivity" data-aos="fade-up">
+            <div class="tool-header">
+                <div class="tool-icon">
+                    <i class="fa fa-qrcode"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">二维码生成器</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    快速生成文本、URL、联系人信息的二维码，支持自定义样式。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- 输入区域 -->
+                <div>
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">二维码内容</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="qr-content-type" class="form-label">内容类型</label>
+                                <select id="qr-content-type" class="form-select">
+                                    <option value="text">文本</option>
+                                    <option value="url">URL</option>
+                                    <option value="contact">联系人</option>
+                                </select>
+                            </div>
+                            
+                            <div id="qr-text-input">
+                                <label for="qr-text" class="form-label">输入文本</label>
+                                <textarea id="qr-text" class="form-textarea" placeholder="请输入要生成二维码的文本..."></textarea>
+                            </div>
+                            
+                            <div id="qr-url-input" class="hidden">
+                                <label for="qr-url" class="form-label">输入URL</label>
+                                <input type="url" id="qr-url" class="form-input" placeholder="https://example.com">
+                            </div>
+                            
+                            <div id="qr-contact-input" class="hidden space-y-4">
+                                <div>
+                                    <label for="qr-name" class="form-label">姓名</label>
+                                    <input type="text" id="qr-name" class="form-input" placeholder="请输入姓名">
+                                </div>
+                                <div>
+                                    <label for="qr-phone" class="form-label">电话</label>
+                                    <input type="tel" id="qr-phone" class="form-input" placeholder="请输入电话号码">
+                                </div>
+                                <div>
+                                    <label for="qr-email" class="form-label">邮箱</label>
+                                    <input type="email" id="qr-email" class="form-input" placeholder="请输入邮箱地址">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">二维码样式</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="qr-size" class="form-label">二维码大小</label>
+                                <input type="range" id="qr-size" class="form-input" min="128" max="512" value="256">
+                                <div class="text-center text-sm text-gray-500">128px - 512px</div>
+                            </div>
+                            
+                            <div>
+                                <label for="qr-color" class="form-label">二维码颜色</label>
+                                <input type="color" id="qr-color" class="form-input" value="#000000">
+                            </div>
+                            
+                            <div>
+                                <label for="qr-bg-color" class="form-label">背景颜色</label>
+                                <input type="color" id="qr-bg-color" class="form-input" value="#FFFFFF">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="generate-qr-btn" class="btn btn-primary btn-lg btn-block">
+                        <i class="fa fa-qrcode mr-2"></i> 生成二维码
+                    </button>
+                </div>
+                
+                <!-- 预览区域 -->
+                <div>
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">二维码预览</h3>
+                        <div class="qr-preview flex justify-center items-center min-h-[300px]">
+                            <canvas id="qr-canvas" class="max-w-full h-auto"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button id="download-qr-png" class="btn btn-success">
+                            <i class="fa fa-download mr-2"></i> 下载 PNG
+                        </button>
+                        <button id="download-qr-svg" class="btn btn-info">
+                            <i class="fa fa-file-image-o mr-2"></i> 下载 SVG
+                        </button>
+                        <button id="copy-qr-btn" class="btn btn-secondary">
+                            <i class="fa fa-copy mr-2"></i> 复制图片
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 颜色选择器 -->
+        <section id="color-picker-tool" class="tool-container glass" data-category="design" data-aos="fade-up">
+            <div class="tool-header">
+                <div class="tool-icon">
+                    <i class="fa fa-eyedropper"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">颜色选择器</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    专业的颜色选择和转换工具，支持RGB、HSL、HEX等多种格式。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- 颜色预览 -->
+                <div>
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">颜色预览</h3>
+                        <div id="color-preview" class="w-full h-48 rounded-xl border-2 border-gray-300 cursor-pointer" style="background-color: #3B82F6;"></div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">快速颜色</h3>
+                        <div class="grid grid-cols-6 gap-2">
+                            <div class="color-swatch w-10 h-10 rounded cursor-pointer" data-color="#FF0000"></div>
+                            <div class="color-swatch w-10 h-10 rounded cursor-pointer" data-color="#00FF00"></div>
+                            <div class="color-swatch w-10 h-10 rounded cursor-pointer" data-color="#0000FF"></div>
+                            <div class="color-swatch w-10 h-10 rounded cursor-pointer" data-color="#FFFF00"></div>
+                            <div class="color-swatch w-10 h-10 rounded cursor-pointer" data-color="#FF00FF"></div>
+                            <div class="color-swatch w-10 h-10 rounded cursor-pointer" data-color="#00FFFF"></div>
+                            <div class="color-swatch w-10 h-10 rounded cursor-pointer" data-color="#FFA500"></div>
+                            <div class="color-swatch w-10 h-10 rounded cursor-pointer" data-color="#800080"></div>
+                            <div class="color-swatch w-10 h-10 rounded cursor-pointer" data-color="#008000"></div>
+                            <div class="color-swatch w-10 h-10 rounded cursor-pointer" data-color="#800000"></div>
+                            <div class="color-swatch w-10 h-10 rounded cursor-pointer" data-color="#008080"></div>
+                            <div class="color-swatch w-10 h-10 rounded cursor-pointer" data-color="#808000"></div>
+                        </div>
+                    </div>
+                    
+                    <button id="random-color-btn" class="btn btn-primary btn-block">
+                        <i class="fa fa-random mr-2"></i> 随机颜色
+                    </button>
+                </div>
+                
+                <!-- 颜色输入 -->
+                <div>
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">颜色输入</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="color-input" class="form-label">颜色选择器</label>
+                                <input type="color" id="color-input" class="form-input w-full h-12" value="#3B82F6">
+                            </div>
+                            
+                            <div>
+                                <label for="hex-input" class="form-label">HEX</label>
+                                <div class="flex gap-2">
+                                    <input type="text" id="hex-input" class="form-input flex-1" value="#3B82F6">
+                                    <button class="copy-color-btn btn btn-secondary" data-target="hex">
+                                        <i class="fa fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="rgb-input" class="form-label">RGB</label>
+                                <div class="flex gap-2">
+                                    <input type="text" id="rgb-input" class="form-input flex-1" value="rgb(59, 130, 246)">
+                                    <button class="copy-color-btn btn btn-secondary" data-target="rgb">
+                                        <i class="fa fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="hsl-input" class="form-label">HSL</label>
+                                <div class="flex gap-2">
+                                    <input type="text" id="hsl-input" class="form-input flex-1" value="hsl(217, 91%, 60%)">
+                                    <button class="copy-color-btn btn btn-secondary" data-target="hsl">
+                                        <i class="fa fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 颜色调整 -->
+                <div>
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">颜色调整</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <label for="hue-slider" class="form-label flex justify-between">
+                                    <span>Hue</span>
+                                    <span id="hue-value">217°</span>
+                                </label>
+                                <input type="range" id="hue-slider" class="form-input" min="0" max="360" value="217">
+                            </div>
+                            
+                            <div>
+                                <label for="saturation-slider" class="form-label flex justify-between">
+                                    <span>Saturation</span>
+                                    <span id="saturation-value">91%</span>
+                                </label>
+                                <input type="range" id="saturation-slider" class="form-input" min="0" max="100" value="91">
+                            </div>
+                            
+                            <div>
+                                <label for="lightness-slider" class="form-label flex justify-between">
+                                    <span>Lightness</span>
+                                    <span id="lightness-value">60%</span>
+                                </label>
+                                <input type="range" id="lightness-slider" class="form-input" min="0" max="100" value="60">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">调色板</h3>
+                        <div id="color-palette" class="grid grid-cols-5 gap-2">
+                            <!-- 调色板将动态生成 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 密码生成器 -->
+        <section id="password-generator" class="tool-container glass" data-category="security" data-aos="fade-up">
+            <div class="tool-header">
+                <div class="tool-icon">
+                    <i class="fa fa-key"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">密码生成器</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    生成安全强密码，支持自定义规则和密码强度检测。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- 密码生成 -->
+                <div>
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">密码设置</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="password-length" class="form-label flex justify-between">
+                                    <span>密码长度</span>
+                                    <span id="length-value">12</span>
+                                </label>
+                                <input type="range" id="password-length" class="form-input" min="4" max="128" value="12">
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label class="form-checkbox">
+                                    <input type="checkbox" id="use-uppercase" checked>
+                                    <span>包含大写字母 (A-Z)</span>
+                                </label>
+                                <label class="form-checkbox">
+                                    <input type="checkbox" id="use-lowercase" checked>
+                                    <span>包含小写字母 (a-z)</span>
+                                </label>
+                                <label class="form-checkbox">
+                                    <input type="checkbox" id="use-numbers" checked>
+                                    <span>包含数字 (0-9)</span>
+                                </label>
+                                <label class="form-checkbox">
+                                    <input type="checkbox" id="use-symbols" checked>
+                                    <span>包含特殊字符 (!@#$%^&*)</span>
+                                </label>
+                                <label class="form-checkbox">
+                                    <input type="checkbox" id="exclude-similar">
+                                    <span>排除相似字符 (il1Lo0O)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">生成的密码</h3>
+                        <div class="flex gap-2 mb-4">
+                            <input type="text" id="generated-password" class="form-input flex-1 font-mono" readonly placeholder="点击生成密码">
+                            <button id="copy-password-btn" class="btn btn-secondary">
+                                <i class="fa fa-copy"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="password-strength mb-4">
+                            <div class="password-strength-bar"></div>
+                        </div>
+                        <div class="text-center mb-4">
+                            <span id="strength-text" class="font-medium">密码强度: 未生成</span>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button id="generate-password-btn" class="btn btn-primary">
+                            <i class="fa fa-refresh mr-2"></i> 生成密码
+                        </button>
+                        <button id="generate-multiple-btn" class="btn btn-secondary">
+                            <i class="fa fa-list mr-2"></i> 批量生成
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 密码强度分析 -->
+                <div>
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">密码强度分析</h3>
+                        <div id="password-analysis" class="bg-white rounded-lg p-6 shadow">
+                            <div class="text-center text-gray-500 py-8">
+                                <i class="fa fa-info-circle text-2xl mb-2"></i>
+                                <p>生成密码后将显示强度分析</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">密码历史</h3>
+                        <div id="password-history" class="bg-white rounded-lg p-6 shadow max-h-64 overflow-y-auto">
+                            <div class="text-center text-gray-500 py-4">
+                                <i class="fa fa-history text-xl mb-2"></i>
+                                <p>暂无密码历史</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 单位转换器 -->
+        <section id="unit-converter" class="tool-container glass" data-category="converter" data-aos="fade-up">
+            <div class="tool-header">
+                <div class="tool-icon">
+                    <i class="fa fa-exchange"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">单位转换器</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    支持多种单位类型的转换，包括长度、重量、温度、面积、体积等。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- 转换界面 -->
+                <div>
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">选择转换类型</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <button class="conversion-type btn btn-primary active" data-type="length">长度</button>
+                            <button class="conversion-type btn btn-secondary" data-type="weight">重量</button>
+                            <button class="conversion-type btn btn-secondary" data-type="temperature">温度</button>
+                            <button class="conversion-type btn btn-secondary" data-type="area">面积</button>
+                            <button class="conversion-type btn btn-secondary" data-type="volume">体积</button>
+                            <button class="conversion-type btn btn-secondary" data-type="speed">速度</button>
+                            <button class="conversion-type btn btn-secondary" data-type="data">数据</button>
+                            <button class="conversion-type btn btn-secondary" data-type="time">时间</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">转换计算</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="from-value" class="form-label">从</label>
+                                <div class="flex gap-2">
+                                    <input type="number" id="from-value" class="form-input flex-1" placeholder="输入数值">
+                                    <select id="from-unit" class="form-select">
+                                        <!-- 单位选项将动态生成 -->
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-center">
+                                <button id="swap-units-btn" class="btn btn-icon btn-secondary">
+                                    <i class="fa fa-exchange"></i>
+                                </button>
+                            </div>
+                            
+                            <div>
+                                <label for="to-value" class="form-label">到</label>
+                                <div class="flex gap-2">
+                                    <input type="number" id="to-value" class="form-input flex-1" readonly placeholder="转换结果">
+                                    <select id="to-unit" class="form-select">
+                                        <!-- 单位选项将动态生成 -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="convert-btn" class="btn btn-primary btn-block">
+                        <i class="fa fa-calculator mr-2"></i> 转换
+                    </button>
+                </div>
+                
+                <!-- 转换表 -->
+                <div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">快速转换表</h3>
+                        <div id="conversion-table" class="overflow-x-auto">
+                            <table class="w-full glass rounded-lg">
+                                <thead>
+                                    <tr>
+                                        <th class="p-3 text-left border-b border-gray-700">单位</th>
+                                        <th class="p-3 text-right border-b border-gray-700">转换结果</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- 动态生成内容 -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 数据可视化工具 -->
+        <section id="data-visualization" class="tool-container glass" data-category="productivity" data-aos="fade-up">
+            <div class="tool-header">
+                <div class="tool-icon">
+                    <i class="fa fa-bar-chart"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">数据可视化工具</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    将数据转换为直观的图表，支持多种图表类型和自定义选项。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- 图表控制 -->
+                <div>
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">图表类型</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button class="chart-type btn btn-primary active" data-type="bar">柱状图</button>
+                            <button class="chart-type btn btn-secondary" data-type="line">折线图</button>
+                            <button class="chart-type btn btn-secondary" data-type="pie">饼图</button>
+                            <button class="chart-type btn btn-secondary" data-type="doughnut">环形图</button>
+                            <button class="chart-type btn btn-secondary" data-type="radar">雷达图</button>
+                            <button class="chart-type btn btn-secondary" data-type="polarArea">极坐标图</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold mb-4">数据输入</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="chart-title" class="form-label">图表标题</label>
+                                <input type="text" id="chart-title" class="form-input" placeholder="输入图表标题">
+                            </div>
+                            
+                            <div>
+                                <label for="chart-labels" class="form-label">标签 (用逗号分隔)</label>
+                                <input type="text" id="chart-labels" class="form-input" placeholder="标签1,标签2,标签3">
+                            </div>
+                            
+                            <div>
+                                <label for="chart-data" class="form-label">数据 (用逗号分隔)</label>
+                                <input type="text" id="chart-data" class="form-input" placeholder="10,20,30,40,50">
+                            </div>
+                            
+                            <div>
+                                <label for="chart-colors" class="form-label">颜色 (用逗号分隔HEX值)</label>
+                                <input type="text" id="chart-colors" class="form-input" placeholder="#3B82F6,#EF4444,#10B981,#F59E0B">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button id="generate-chart-btn" class="btn btn-primary">
+                            <i class="fa fa-bar-chart mr-2"></i> 生成图表
+                        </button>
+                        <button id="generate-random-btn" class="btn btn-secondary">
+                            <i class="fa fa-random mr-2"></i> 随机数据
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 图表显示 -->
+                <div class="lg:col-span-2">
+                    <div class="mb-6">
+                        <div class="chart-container">
+                            <canvas id="chart-canvas"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button id="download-chart-png" class="btn btn-success">
+                            <i class="fa fa-download mr-2"></i> 下载 PNG
+                        </button>
+                        <button id="download-chart-svg" class="btn btn-info">
+                            <i class="fa fa-file-image-o mr-2"></i> 下载 SVG
+                        </button>
+                        <button id="download-chart-data" class="btn btn-secondary">
+                            <i class="fa fa-file-text-o mr-2"></i> 下载数据
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <i class="fa fa-wrench text-2xl text-primary"></i>
+                        <span class="text-xl font-bold text-gradient">工具总和</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        您的一站式工具和游戏平台，让数字生活更加便捷和有趣。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">首页</a></li>
+                        <li><a href="tools.html">工具集</a></li>
+                        <li><a href="snake-game.html">贪吃蛇游戏</a></li>
+                        <li><a href="about.html">关于我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">热门工具</h3>
+                    <ul class="footer-links">
+                        <li><a href="#code-formatter">代码格式化工具</a></li>
+                        <li><a href="#pixel-art-generator">像素艺术生成器</a></li>
+                        <li><a href="#scientific-calculator">科学计算器</a></li>
+                        <li><a href="#qr-code-generator">二维码生成器</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">联系我们</h3>
+                    <ul class="footer-links">
+                        <li class="flex items-start">
+                            <i class="fa fa-envelope text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">contact@toolcollection.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-phone text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">+1 (123) 456-7890</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">123 Tech Street, Digital City</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-500">© 2024 工具总和. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <button id="back-to-top" class="btn btn-icon btn-primary fixed bottom-8 right-8 opacity-0 invisible transition-all duration-300">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <!-- 通用工具 JavaScript -->
+    <script src="../assets/js/utils.js"></script>
+    
+    <!-- 工具页面 JavaScript -->
+    <script>
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化AOS动画
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 100
+            });
+            
+            // 初始化GSAP动画
+            initGSAPAnimations();
+            
+            // 初始化工具筛选
+            initToolFilter();
+            
+            // 初始化代码格式化工具
+            initCodeFormatter();
+            
+            // 初始化像素艺术生成器
+            initPixelArtGenerator();
+            
+            // 初始化科学计算器
+            initScientificCalculator();
+            
+            // 初始化二维码生成器
+            initQRCodeGenerator();
+            
+            // 初始化颜色选择器
+            initColorPicker();
+            
+            // 初始化密码生成器
+            initPasswordGenerator();
+            
+            // 初始化单位转换器
+            initUnitConverter();
+            
+            // 初始化数据可视化工具
+            initDataVisualization();
+            
+            // 初始化主题切换
+            initThemeToggle();
+            
+            // 初始化移动端菜单
+            initMobileMenu();
+            
+            // 初始化回到顶部按钮
+            initBackToTop();
+            
+            // 导航栏滚动效果
+            initNavbarScroll();
+        });
+        
+        // GSAP动画初始化
+        function initGSAPAnimations() {
+            // 工具容器动画
+            gsap.from('.tool-container', {
+                scrollTrigger: {
+                    trigger: '.tool-container',
+                    start: 'top 80%'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                stagger: 0.2
+            });
+            
+            // 工具标题动画
+            gsap.from('.tool-container h2', {
+                scrollTrigger: {
+                    trigger: '.tool-container h2',
+                    start: 'top 80%'
+                },
+                opacity: 0,
+                x: -30,
+                duration: 0.6
+            });
+        }
+        
+        // 工具筛选功能
+        function initToolFilter() {
+            const filterButtons = document.querySelectorAll('.tool-filter');
+            const toolContainers = document.querySelectorAll('.tool-container');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // 更新按钮状态
+                    filterButtons.forEach(btn => btn.classList.remove('active', 'btn-primary'));
+                    filterButtons.forEach(btn => btn.classList.add('btn-secondary'));
+                    button.classList.add('active', 'btn-primary');
+                    button.classList.remove('btn-secondary');
+                    
+                    const category = button.getAttribute('data-category');
+                    
+                    // 筛选工具
+                    toolContainers.forEach(container => {
+                        if (category === 'all' || container.getAttribute('data-category') === category) {
+                            container.style.display = 'block';
+                            gsap.fromTo(container, 
+                                { opacity: 0, y: 20 },
+                                { opacity: 1, y: 0, duration: 0.5 }
+                            );
+                        } else {
+                            gsap.to(container, {
+                                opacity: 0,
+                                y: -20,
+                                duration: 0.3,
+                                onComplete: () => {
+                                    container.style.display = 'none';
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+        }
+        
+        // 代码格式化工具
+        function initCodeFormatter() {
+            const codeLangButtons = document.querySelectorAll('.code-lang');
+            const formatBtn = document.getElementById('format-btn');
+            const minifyBtn = document.getElementById('minify-btn');
+            const copyBtn = document.getElementById('copy-code-btn');
+            const downloadBtn = document.getElementById('download-code-btn');
+            const clearBtn = document.getElementById('clear-code-btn');
+            const codeInput = document.getElementById('code-input');
+            const codeOutput = document.getElementById('code-output');
+            const languageDisplay = document.querySelector('.code-editor-language');
+            
+            let currentLang = 'javascript';
+            
+            // 语言切换
+            codeLangButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    codeLangButtons.forEach(btn => btn.classList.remove('active', 'btn-primary'));
+                    codeLangButtons.forEach(btn => btn.classList.add('btn-secondary'));
+                    button.classList.add('active', 'btn-primary');
+                    button.classList.remove('btn-secondary');
+                    currentLang = button.getAttribute('data-lang');
+                    languageDisplay.textContent = button.textContent.trim();
+                });
+            });
+            
+            // 格式化代码
+            formatBtn.addEventListener('click', () => {
+                const code = codeInput.value.trim();
+                if (!code) {
+                    Utils.showNotification('请输入要格式化的代码', 'warning');
+                    return;
+                }
+                
+                try {
+                    let formattedCode = '';
+                    
+                    switch (currentLang) {
+                        case 'json':
+                            formattedCode = Tools.codeFormatter.formatJSON(code);
+                            break;
+                        case 'html':
+                            formattedCode = Tools.codeFormatter.formatHTML(code);
+                            break;
+                        case 'javascript':
+                            formattedCode = Tools.codeFormatter.formatJavaScript(code);
+                            break;
+                        case 'css':
+                            formattedCode = Tools.codeFormatter.formatCSS(code);
+                            break;
+                        default:
+                            formattedCode = code;
+                    }
+                    
+                    codeOutput.value = formattedCode;
+                    Utils.showNotification('代码格式化成功', 'success');
+                } catch (error) {
+                    Utils.showNotification(`格式化失败: ${error.message}`, 'error');
+                }
+            });
+            
+            // 压缩代码
+            minifyBtn.addEventListener('click', () => {
+                const code = codeInput.value.trim();
+                if (!code) {
+                    Utils.showNotification('请输入要压缩的代码', 'warning');
+                    return;
+                }
+                
+                try {
+                    const minifiedCode = Tools.codeFormatter.minifyCode(code, currentLang);
+                    codeOutput.value = minifiedCode;
+                    Utils.showNotification('代码压缩成功', 'success');
+                } catch (error) {
+                    Utils.showNotification(`压缩失败: ${error.message}`, 'error');
+                }
+            });
+            
+            // 复制结果
+            copyBtn.addEventListener('click', async () => {
+                const code = codeOutput.value;
+                if (!code) {
+                    Utils.showNotification('没有可复制的内容', 'warning');
+                    return;
+                }
+                
+                const success = await Utils.copyToClipboard(code);
+                if (success) {
+                    Utils.showNotification('代码已复制到剪贴板', 'success');
+                } else {
+                    Utils.showNotification('复制失败，请手动复制', 'error');
+                }
+            });
+            
+            // 下载代码
+            downloadBtn.addEventListener('click', () => {
+                const code = codeOutput.value;
+                if (!code) {
+                    Utils.showNotification('没有可下载的内容', 'warning');
+                    return;
+                }
+                
+                const extensions = {
+                    'javascript': 'js',
+                    'html': 'html',
+                    'css': 'css',
+                    'json': 'json',
+                    'python': 'py'
+                };
+                
+                const extension = extensions[currentLang] || 'txt';
+                const filename = `formatted-code.${extension}`;
+                const contentType = `text/${currentLang === 'javascript' ? 'javascript' : currentLang}`;
+                
+                Utils.downloadFile(code, filename, contentType);
+                Utils.showNotification('代码下载成功', 'success');
+            });
+            
+            // 清空输入
+            clearBtn.addEventListener('click', () => {
+                codeInput.value = '';
+                codeOutput.value = '';
+            });
+        }
+        
+        // 像素艺术生成器
+        function initPixelArtGenerator() {
+            const canvas = document.getElementById('pixel-canvas');
+            const ctx = canvas.getContext('2d');
+            const widthInput = document.getElementById('canvas-width');
+            const heightInput = document.getElementById('canvas-height');
+            const pixelSizeInput = document.getElementById('pixel-size');
+            const resizeBtn = document.getElementById('resize-canvas-btn');
+            const clearBtn = document.getElementById('clear-canvas-btn');
+            const exportBtn = document.getElementById('export-pixel-btn');
+            const colorPicker = document.getElementById('color-picker');
+            const customColorInput = document.getElementById('custom-color');
+            const addColorBtn = document.getElementById('add-color-btn');
+            const toolButtons = document.querySelectorAll('.pixel-tool');
+            
+            let pixelCanvas = Tools.pixelArt.createCanvas(16, 16, 20);
+            let isDrawing = false;
+            let currentTool = 'pencil';
+            
+            // 初始化颜色选择器
+            const defaultColors = [
+                '#000000', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF',
+                '#FFFF00', '#FF00FF', '#00FFFF', '#FFA500', '#800080',
+                '#008000', '#800000', '#008080', '#808000', '#808080',
+                '#C0C0C0', '#FFC0CB', '#FFA07A', '#87CEEB', '#98FB98'
+            ];
+            
+            function initColorPicker() {
+                colorPicker.innerHTML = '';
+                defaultColors.forEach(color => {
+                    const colorDiv = document.createElement('div');
+                    colorDiv.className = `pixel-color ${pixelCanvas.currentColor === color ? 'active' : ''}`;
+                    colorDiv.style.backgroundColor = color;
+                    colorDiv.setAttribute('data-color', color);
+                    colorDiv.addEventListener('click', () => {
+                        pixelCanvas.currentColor = color;
+                        document.querySelectorAll('.pixel-color').forEach(c => c.classList.remove('active'));
+                        colorDiv.classList.add('active');
+                    });
+                    colorPicker.appendChild(colorDiv);
+                });
+            }
+            
+            // 初始化画布
+            function initCanvas() {
+                pixelCanvas = Tools.pixelArt.createCanvas(
+                    parseInt(widthInput.value),
+                    parseInt(heightInput.value),
+                    parseInt(pixelSizeInput.value)
+                );
+                
+                canvas.width = pixelCanvas.width * pixelCanvas.pixelSize;
+                canvas.height = pixelCanvas.height * pixelCanvas.pixelSize;
+                
+                drawCanvas();
+            }
+            
+            // 绘制画布
+            function drawCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                for (let y = 0; y < pixelCanvas.height; y++) {
+                    for (let x = 0; x < pixelCanvas.width; x++) {
+                        ctx.fillStyle = pixelCanvas.pixels[y][x];
+                        ctx.fillRect(
+                            x * pixelCanvas.pixelSize,
+                            y * pixelCanvas.pixelSize,
+                            pixelCanvas.pixelSize,
+                            pixelCanvas.pixelSize
+                        );
+                        
+                        // 绘制网格线
+                        ctx.strokeStyle = '#e5e7eb';
+                        ctx.lineWidth = 1;
+                        ctx.strokeRect(
+                            x * pixelCanvas.pixelSize,
+                            y * pixelCanvas.pixelSize,
+                            pixelCanvas.pixelSize,
+                            pixelCanvas.pixelSize
+                        );
+                    }
+                }
+            }
+            
+            // 获取鼠标在画布上的位置
+            function getCanvasPosition(e) {
+                const rect = canvas.getBoundingClientRect();
+                const x = Math.floor((e.clientX - rect.left) / pixelCanvas.pixelSize);
+                const y = Math.floor((e.clientY - rect.top) / pixelCanvas.pixelSize);
+                return { x, y };
+            }
+            
+            // 绘制像素
+            function drawPixel(x, y) {
+                if (x >= 0 && x < pixelCanvas.width && y >= 0 && y < pixelCanvas.height) {
+                    switch (currentTool) {
+                        case 'pencil':
+                            Tools.pixelArt.setPixel(pixelCanvas, x, y, pixelCanvas.currentColor);
+                            break;
+                        case 'eraser':
+                            Tools.pixelArt.setPixel(pixelCanvas, x, y, '#FFFFFF');
+                            break;
+                        case 'fill':
+                            Tools.pixelArt.fillArea(pixelCanvas, x, y, pixelCanvas.currentColor);
+                            break;
+                    }
+                    drawCanvas();
+                }
+            }
+            
+            // 事件监听器
+            canvas.addEventListener('mousedown', (e) => {
+                isDrawing = true;
+                const pos = getCanvasPosition(e);
+                drawPixel(pos.x, pos.y);
+            });
+            
+            canvas.addEventListener('mousemove', (e) => {
+                if (isDrawing) {
+                    const pos = getCanvasPosition(e);
+                    drawPixel(pos.x, pos.y);
+                }
+            });
+            
+            canvas.addEventListener('mouseup', () => {
+                isDrawing = false;
+            });
+            
+            canvas.addEventListener('mouseleave', () => {
+                isDrawing = false;
+            });
+            
+            // 触摸支持
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const pos = getCanvasPosition(touch);
+                drawPixel(pos.x, pos.y);
+            });
+            
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const pos = getCanvasPosition(touch);
+                drawPixel(pos.x, pos.y);
+            });
+            
+            // 工具切换
+            toolButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    toolButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    currentTool = button.getAttribute('data-tool');
+                });
+            });
+            
+            // 调整画布大小
+            resizeBtn.addEventListener('click', () => {
+                initCanvas();
+                Utils.showNotification('画布大小已调整', 'success');
+            });
+            
+            // 清空画布
+            clearBtn.addEventListener('click', () => {
+                for (let y = 0; y < pixelCanvas.height; y++) {
+                    for (let x = 0; x < pixelCanvas.width; x++) {
+                        Tools.pixelArt.setPixel(pixelCanvas, x, y, '#FFFFFF');
+                    }
+                }
+                drawCanvas();
+                Utils.showNotification('画布已清空', 'success');
+            });
+            
+            // 导出图片
+            exportBtn.addEventListener('click', () => {
+                const dataURL = Tools.pixelArt.exportToImage(pixelCanvas);
+                const link = document.createElement('a');
+                link.download = 'pixel-art.png';
+                link.href = dataURL;
+                link.click();
+                Utils.showNotification('图片导出成功', 'success');
+            });
+            
+            // 添加自定义颜色
+            addColorBtn.addEventListener('click', () => {
+                const color = customColorInput.value;
+                if (!defaultColors.includes(color)) {
+                    defaultColors.push(color);
+                    initColorPicker();
+                    Utils.showNotification('颜色已添加', 'success');
+                }
+            });
+            
+            // 初始化
+            initColorPicker();
+            initCanvas();
+        }
+        
+        // 科学计算器
+        function initScientificCalculator() {
+            const display = document.getElementById('calc-display');
+            const calcButtons = document.querySelectorAll('.calc-btn');
+            const history = document.getElementById('calc-history');
+            
+            let currentInput = '';
+            let operator = null;
+            let previousInput = '';
+            let shouldResetDisplay = false;
+            let calculationHistory = [];
+            
+            // 按钮点击事件
+            calcButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const value = button.getAttribute('data-value');
+                    handleButtonPress(value);
+                });
+            });
+            
+            // 键盘支持
+            document.addEventListener('keydown', (e) => {
+                const key = e.key;
+                
+                if ('0123456789+-*/.=()'.includes(key)) {
+                    e.preventDefault();
+                    handleButtonPress(key === '*' ? '*' : key === '/' ? '/' : key);
+                } else if (key === 'Enter') {
+                    e.preventDefault();
+                    handleButtonPress('=');
+                } else if (key === 'Escape' || key === 'c' || key === 'C') {
+                    e.preventDefault();
+                    handleButtonPress('clear');
+                } else if (key === 'Backspace') {
+                    e.preventDefault();
+                    handleButtonPress('backspace');
+                }
+            });
+            
+            // 处理按钮按下
+            function handleButtonPress(value) {
+                // 数字和小数点
+                if (/[0-9.]/.test(value)) {
+                    if (shouldResetDisplay) {
+                        display.value = '';
+                        shouldResetDisplay = false;
+                    }
+                    
+                    if (value === '.' && display.value.includes('.')) return;
+                    
+                    display.value += value;
+                    currentInput = display.value;
+                    
+                } else if (['+', '-', '*', '/'].includes(value)) {
+                    // 运算符
+                    if (previousInput && currentInput && operator && !shouldResetDisplay) {
+                        // 计算之前的结果
+                        calculate();
+                    }
+                    
+                    operator = value;
+                    previousInput = currentInput || previousInput;
+                    shouldResetDisplay = true;
+                    
+                } else if (value === '=') {
+                    // 等号
+                    if (previousInput && currentInput && operator) {
+                        calculate();
+                    }
+                    
+                } else if (value === 'clear') {
+                    // 清除
+                    clearCalculator();
+                    
+                } else if (value === 'backspace') {
+                    // 退格
+                    display.value = display.value.slice(0, -1);
+                    currentInput = display.value;
+                    
+                } else if (['sin', 'cos', 'tan', 'log', 'ln', 'sqrt', 'pow2', 'pow3', 'exp', 'factorial', 'abs', 'ceil', 'floor', 'round'].includes(value)) {
+                    // 科学函数
+                    if (currentInput) {
+                        const num = parseFloat(currentInput);
+                        let result;
+                        
+                        try {
+                            result = Tools.calculator.scientific(value, num);
+                            addToHistory(`${value}(${num})`, result);
+                            display.value = formatResult(result);
+                            currentInput = display.value;
+                            shouldResetDisplay = true;
+                            
+                        } catch (error) {
+                            Utils.showNotification('计算错误', 'error');
+                        }
+                    }
+                    
+                } else if (value === 'pi') {
+                    // π
+                    display.value = Math.PI.toFixed(10);
+                    currentInput = display.value;
+                    shouldResetDisplay = true;
+                    
+                } else if (value === 'e') {
+                    // e
+                    display.value = Math.E.toFixed(10);
+                    currentInput = display.value;
+                    shouldResetDisplay = true;
+                    
+                } else if (value === '±') {
+                    // 正负号
+                    if (currentInput) {
+                        const num = parseFloat(currentInput);
+                        const result = -num;
+                        display.value = result.toString();
+                        currentInput = display.value;
+                    }
+                    
+                } else if (value === 'history') {
+                    // 显示历史
+                    toggleHistory();
+                }
+            }
+            
+            // 计算结果
+            function calculate() {
+                const num1 = parseFloat(previousInput);
+                const num2 = parseFloat(currentInput);
+                let result;
+                
+                try {
+                    result = Tools.calculator.calculate(num1, num2, operator);
+                    
+                    const expression = `${num1} ${getOperatorSymbol(operator)} ${num2}`;
+                    addToHistory(expression, result);
+                    
+                    display.value = formatResult(result);
+                    currentInput = display.value;
+                    previousInput = '';
+                    operator = null;
+                    shouldResetDisplay = true;
+                    
+                } catch (error) {
+                    Utils.showNotification(`计算错误: ${error.message}`, 'error');
+                }
+            }
+            
+            // 清除计算器
+            function clearCalculator() {
+                display.value = '';
+                currentInput = '';
+                previousInput = '';
+                operator = null;
+                shouldResetDisplay = false;
+            }
+            
+            // 格式化结果
+            function formatResult(result) {
+                if (!isFinite(result)) {
+                    throw new Error('结果无效');
+                }
+                
+                // 处理小数位数
+                if (Number.isInteger(result)) {
+                    return result.toString();
+                } else {
+                    // 保留适当的小数位数
+                    return parseFloat(result.toFixed(10)).toString();
+                }
+            }
+            
+            // 获取运算符符号
+            function getOperatorSymbol(op) {
+                const symbols = {
+                    '+': '+',
+                    '-': '-',
+                    '*': '×',
+                    '/': '÷'
+                };
+                return symbols[op] || op;
+            }
+            
+            // 添加到历史记录
+            function addToHistory(expression, result) {
+                const historyItem = {
+                    expression,
+                    result: formatResult(result),
+                    timestamp: new Date().toLocaleTimeString()
+                };
+                
+                calculationHistory.unshift(historyItem);
+                
+                // 限制历史记录数量
+                if (calculationHistory.length > 20) {
+                    calculationHistory.pop();
+                }
+                
+                updateHistoryDisplay();
+            }
+            
+            // 更新历史记录显示
+            function updateHistoryDisplay() {
+                if (calculationHistory.length === 0) {
+                    history.innerHTML = `
+                        <div class="text-center text-gray-500 py-8">
+                            <i class="fa fa-info-circle text-2xl mb-2"></i>
+                            <p>暂无计算历史</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                history.innerHTML = calculationHistory.map(item => `
+                    <div class="py-3 border-b border-gray-200 last:border-0">
+                        <div class="text-gray-600 text-sm mb-1">${item.timestamp}</div>
+                        <div class="text-gray-800">${item.expression}</div>
+                        <div class="text-right font-bold text-primary">= ${item.result}</div>
+                    </div>
+                `).join('');
+            }
+            
+            // 切换历史记录显示
+            function toggleHistory() {
+                // 这里可以实现历史记录面板的显示/隐藏逻辑
+                Utils.showNotification('历史记录功能已实现', 'info');
+            }
+            
+            // 初始化
+            updateHistoryDisplay();
+        }
+        
+        // 二维码生成器
+        function initQRCodeGenerator() {
+            const contentTypeSelect = document.getElementById('qr-content-type');
+            const textInput = document.getElementById('qr-text-input');
+            const urlInput = document.getElementById('qr-url-input');
+            const contactInput = document.getElementById('qr-contact-input');
+            const generateBtn = document.getElementById('generate-qr-btn');
+            const qrCanvas = document.getElementById('qr-canvas');
+            const qrCtx = qrCanvas.getContext('2d');
+            const downloadPngBtn = document.getElementById('download-qr-png');
+            const downloadSvgBtn = document.getElementById('download-qr-svg');
+            const copyBtn = document.getElementById('copy-qr-btn');
+            const sizeInput = document.getElementById('qr-size');
+            const colorInput = document.getElementById('qr-color');
+            const bgColorInput = document.getElementById('qr-bg-color');
+            
+            // 内容类型切换
+            contentTypeSelect.addEventListener('change', () => {
+                const type = contentTypeSelect.value;
+                textInput.classList.toggle('hidden', type !== 'text');
+                urlInput.classList.toggle('hidden', type !== 'url');
+                contactInput.classList.toggle('hidden', type !== 'contact');
+            });
+            
+            // 生成二维码
+            generateBtn.addEventListener('click', () => {
+                try {
+                    const type = contentTypeSelect.value;
+                    let content = '';
+                    
+                    switch (type) {
+                        case 'text':
+                            content = document.getElementById('qr-text').value.trim();
+                            break;
+                        case 'url':
+                            content = document.getElementById('qr-url').value.trim();
+                            break;
+                        case 'contact':
+                            const name = document.getElementById('qr-name').value.trim();
+                            const phone = document.getElementById('qr-phone').value.trim();
+                            const email = document.getElementById('qr-email').value.trim();
+                            content = `MECARD:N:${name};TEL:${phone};EMAIL:${email};`;
+                            break;
+                    }
+                    
+                    if (!content) {
+                        Utils.showNotification('请输入内容', 'warning');
+                        return;
+                    }
+                    
+                    const size = parseInt(sizeInput.value);
+                    const color = colorInput.value;
+                    const bgColor = bgColorInput.value;
+                    
+                    // 生成二维码数据
+                    const qrData = Tools.qrCode.generateQRCode(content, size);
+                    
+                    // 绘制二维码
+                    Tools.qrCode.drawQRCode(qrData, qrCanvas, color, bgColor);
+                    
+                    Utils.showNotification('二维码生成成功', 'success');
+                    
+                } catch (error) {
+                    Utils.showNotification(`生成失败: ${error.message}`, 'error');
+                }
+            });
+            
+            // 下载PNG
+            downloadPngBtn.addEventListener('click', () => {
+                if (qrCanvas.width === 0) {
+                    Utils.showNotification('请先生成二维码', 'warning');
+                    return;
+                }
+                
+                const dataURL = qrCanvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.download = 'qrcode.png';
+                link.href = dataURL;
+                link.click();
+                
+                Utils.showNotification('二维码下载成功', 'success');
+            });
+            
+            // 下载SVG
+            downloadSvgBtn.addEventListener('click', () => {
+                if (qrCanvas.width === 0) {
+                    Utils.showNotification('请先生成二维码', 'warning');
+                    return;
+                }
+                
+                // 这里简化处理，实际应该生成SVG
+                Utils.showNotification('SVG下载功能开发中', 'info');
+            });
+            
+            // 复制图片
+            copyBtn.addEventListener('click', async () => {
+                if (qrCanvas.width === 0) {
+                    Utils.showNotification('请先生成二维码', 'warning');
+                    return;
+                }
+                
+                try {
+                    const dataURL = qrCanvas.toDataURL('image/png');
+                    const blob = await (await fetch(dataURL)).blob();
+                    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                    Utils.showNotification('二维码已复制到剪贴板', 'success');
+                } catch (error) {
+                    Utils.showNotification('复制失败', 'error');
+                }
+            });
+        }
+        
+        // 颜色选择器
+        function initColorPicker() {
+            const colorPreview = document.getElementById('color-preview');
+            const colorInput = document.getElementById('color-input');
+            const hexInput = document.getElementById('hex-input');
+            const rgbInput = document.getElementById('rgb-input');
+            const hslInput = document.getElementById('hsl-input');
+            const randomColorBtn = document.getElementById('random-color-btn');
+            const copyButtons = document.querySelectorAll('.copy-color-btn');
+            const colorSwatches = document.querySelectorAll('.color-swatch');
+            
+            // 滑块
+            const hueSlider = document.getElementById('hue-slider');
+            const saturationSlider = document.getElementById('saturation-slider');
+            const lightnessSlider = document.getElementById('lightness-slider');
+            const hueValue = document.getElementById('hue-value');
+            const saturationValue = document.getElementById('saturation-value');
+            const lightnessValue = document.getElementById('lightness-value');
+            
+            // 调色板
+            const colorPalette = document.getElementById('color-palette');
+            
+            // 初始化颜色
+            updateColorFromHex('#3B82F6');
+            
+            // 生成调色板
+            function generateColorPalette(baseColor) {
+                const palette = Tools.colorTool.generateColorPalette(baseColor, 'monochromatic');
+                colorPalette.innerHTML = '';
+                
+                palette.forEach(color => {
+                    const colorDiv = document.createElement('div');
+                    colorDiv.className = 'w-8 h-8 rounded cursor-pointer border border-gray-300';
+                    colorDiv.style.backgroundColor = color;
+                    colorDiv.addEventListener('click', () => {
+                        updateColorFromHex(color);
+                    });
+                    colorPalette.appendChild(colorDiv);
+                });
+            }
+            
+            // 颜色输入变化
+            colorInput.addEventListener('input', () => {
+                updateColorFromHex(colorInput.value);
+            });
+            
+            // HEX输入变化
+            hexInput.addEventListener('input', () => {
+                const hex = hexInput.value.trim();
+                if (/^#?[0-9A-F]{6}$/i.test(hex)) {
+                    const validHex = hex.startsWith('#') ? hex : '#' + hex;
+                    updateColorFromHex(validHex);
+                }
+            });
+            
+            // 随机颜色
+            randomColorBtn.addEventListener('click', () => {
+                const randomColor = Tools.colorTool.generateRandomColor();
+                updateColorFromHex(randomColor);
+            });
+            
+            // 复制颜色值
+            copyButtons.forEach(button => {
+                button.addEventListener('click', async () => {
+                    const target = button.getAttribute('data-target');
+                    let value = '';
+                    
+                    switch (target) {
+                        case 'hex':
+                            value = hexInput.value;
+                            break;
+                        case 'rgb':
+                            value = rgbInput.value;
+                            break;
+                        case 'hsl':
+                            value = hslInput.value;
+                            break;
+                    }
+                    
+                    const success = await Utils.copyToClipboard(value);
+                    if (success) {
+                        Utils.showNotification(`${target.toUpperCase()}值已复制到剪贴板`, 'success');
+                    } else {
+                        Utils.showNotification('复制失败，请手动复制', 'error');
+                    }
+                });
+            });
+            
+            // 调色板颜色选择
+            colorSwatches.forEach(swatch => {
+                swatch.addEventListener('click', () => {
+                    const color = swatch.getAttribute('data-color');
+                    updateColorFromHex(color);
+                });
+            });
+            
+            // 滑块变化
+            hueSlider.addEventListener('input', () => {
+                updateColorFromHSL(
+                    parseInt(hueSlider.value),
+                    parseInt(saturationSlider.value),
+                    parseInt(lightnessSlider.value)
+                );
+            });
+            
+            saturationSlider.addEventListener('input', () => {
+                updateColorFromHSL(
+                    parseInt(hueSlider.value),
+                    parseInt(saturationSlider.value),
+                    parseInt(lightnessSlider.value)
+                );
+            });
+            
+            lightnessSlider.addEventListener('input', () => {
+                updateColorFromHSL(
+                    parseInt(hueSlider.value),
+                    parseInt(saturationSlider.value),
+                    parseInt(lightnessSlider.value)
+                );
+            });
+            
+            // 从HEX更新颜色
+            function updateColorFromHex(hex) {
+                const rgb = Tools.colorTool.hexToRgb(hex);
+                if (rgb) {
+                    const hsl = Tools.colorTool.rgbToHsl(rgb.r, rgb.g, rgb.b);
+                    
+                    // 更新所有输入
+                    colorInput.value = hex;
+                    hexInput.value = hex.toUpperCase();
+                    rgbInput.value = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+                    hslInput.value = `hsl(${Math.round(hsl.h)}, ${Math.round(hsl.s)}%, ${Math.round(hsl.l)}%)`;
+                    
+                    // 更新滑块
+                    hueSlider.value = Math.round(hsl.h);
+                    saturationSlider.value = Math.round(hsl.s);
+                    lightnessSlider.value = Math.round(hsl.l);
+                    
+                    // 更新滑块值显示
+                    hueValue.textContent = `${Math.round(hsl.h)}°`;
+                    saturationValue.textContent = `${Math.round(hsl.s)}%`;
+                    lightnessValue.textContent = `${Math.round(hsl.l)}%`;
+                    
+                    // 更新预览
+                    colorPreview.style.backgroundColor = hex;
+                    
+                    // 生成调色板
+                    generateColorPalette(hex);
+                }
+            }
+            
+            // 从HSL更新颜色
+            function updateColorFromHSL(h, s, l) {
+                const rgb = Tools.colorTool.hslToRgb(h, s, l);
+                const hex = Tools.colorTool.rgbToHex(rgb.r, rgb.g, rgb.b);
+                
+                // 更新所有输入
+                colorInput.value = hex;
+                hexInput.value = hex.toUpperCase();
+                rgbInput.value = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+                hslInput.value = `hsl(${h}, ${s}%, ${l}%)`;
+                
+                // 更新滑块值显示
+                hueValue.textContent = `${h}°`;
+                saturationValue.textContent = `${s}%`;
+                lightnessValue.textContent = `${l}%`;
+                
+                // 更新预览
+                colorPreview.style.backgroundColor = hex;
+                
+                // 生成调色板
+                generateColorPalette(hex);
+            }
+        }
+        
+        // 密码生成器
+        function initPasswordGenerator() {
+            const lengthInput = document.getElementById('password-length');
+            const lengthValue = document.getElementById('length-value');
+            const useUppercase = document.getElementById('use-uppercase');
+            const useLowercase = document.getElementById('use-lowercase');
+            const useNumbers = document.getElementById('use-numbers');
+            const useSymbols = document.getElementById('use-symbols');
+            const excludeSimilar = document.getElementById('exclude-similar');
+            const generateBtn = document.getElementById('generate-password-btn');
+            const generateMultipleBtn = document.getElementById('generate-multiple-btn');
+            const generatedPassword = document.getElementById('generated-password');
+            const copyBtn = document.getElementById('copy-password-btn');
+            const strengthText = document.getElementById('strength-text');
+            const strengthBar = document.querySelector('.password-strength');
+            const analysisDiv = document.getElementById('password-analysis');
+            const historyDiv = document.getElementById('password-history');
+            
+            let passwordHistory = JSON.parse(localStorage.getItem('passwordHistory') || '[]');
+            
+            // 更新长度显示
+            lengthInput.addEventListener('input', () => {
+                lengthValue.textContent = lengthInput.value;
+            });
+            
+            // 生成密码
+            generateBtn.addEventListener('click', () => {
+                generatePassword();
+            });
+            
+            // 批量生成
+            generateMultipleBtn.addEventListener('click', () => {
+                const passwords = [];
+                for (let i = 0; i < 5; i++) {
+                    passwords.push(generatePasswordOptions());
+                }
+                
+                // 显示批量生成的密码
+                let html = '<div class="space-y-3">';
+                passwords.forEach((password, index) => {
+                    html += `
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                            <span class="font-mono text-sm">${password}</span>
+                            <button class="btn btn-sm btn-secondary copy-batch" data-password="${password}">
+                                <i class="fa fa-copy"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                
+                // 创建模态框显示批量密码
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                modal.innerHTML = `
+                    <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-bold">批量生成的密码</h3>
+                            <button class="btn btn-icon btn-ghost close-modal">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                        ${html}
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                document.body.style.overflow = 'hidden';
+                
+                // 关闭模态框
+                modal.querySelector('.close-modal').addEventListener('click', () => {
+                    modal.remove();
+                    document.body.style.overflow = '';
+                });
+                
+                // 复制批量密码
+                modal.querySelectorAll('.copy-batch').forEach(button => {
+                    button.addEventListener('click', async () => {
+                        const password = button.getAttribute('data-password');
+                        const success = await Utils.copyToClipboard(password);
+                        if (success) {
+                            Utils.showNotification('密码已复制到剪贴板', 'success');
+                        }
+                    });
+                });
+            });
+            
+            // 复制密码
+            copyBtn.addEventListener('click', async () => {
+                const password = generatedPassword.value;
+                if (!password) {
+                    Utils.showNotification('没有可复制的密码', 'warning');
+                    return;
+                }
+                
+                const success = await Utils.copyToClipboard(password);
+                if (success) {
+                    Utils.showNotification('密码已复制到剪贴板', 'success');
+                } else {
+                    Utils.showNotification('复制失败，请手动复制', 'error');
+                }
+            });
+            
+            // 生成密码选项
+            function generatePasswordOptions() {
+                return Tools.passwordGenerator.generatePassword({
+                    length: parseInt(lengthInput.value),
+                    useUppercase: useUppercase.checked,
+                    useLowercase: useLowercase.checked,
+                    useNumbers: useNumbers.checked,
+                    useSymbols: useSymbols.checked,
+                    excludeSimilar: excludeSimilar.checked
+                });
+            }
+            
+            // 生成密码
+            function generatePassword() {
+                try {
+                    const password = generatePasswordOptions();
+                    generatedPassword.value = password;
+                    
+                    // 评估密码强度
+                    const strength = Tools.passwordGenerator.evaluateStrength(password);
+                    updateStrengthDisplay(strength);
+                    
+                    // 更新密码分析
+                    updatePasswordAnalysis(strength);
+                    
+                    // 添加到历史记录
+                    addToHistory(password, strength);
+                    
+                } catch (error) {
+                    Utils.showNotification(`生成失败: ${error.message}`, 'error');
+                }
+            }
+            
+            // 更新强度显示
+            function updateStrengthDisplay(strength) {
+                strengthText.textContent = `密码强度: ${getStrengthText(strength.strength)}`;
+                
+                // 更新强度条
+                strengthBar.className = `password-strength mb-4 ${strength.strength}`;
+            }
+            
+            // 获取强度文本
+            function getStrengthText(strength) {
+                const texts = {
+                    'weak': '弱',
+                    'fair': '一般',
+                    'good': '良好',
+                    'strong': '强'
+                };
+                return texts[strength] || '未知';
+            }
+            
+            // 更新密码分析
+            function updatePasswordAnalysis(strength) {
+                let html = `
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">密码长度:</span>
+                            <span>${generatedPassword.value.length} 字符</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">包含大写字母:</span>
+                            <span class="text-${/[A-Z]/.test(generatedPassword.value) ? 'success' : 'error'}">
+                                ${/[A-Z]/.test(generatedPassword.value) ? '✓' : '✗'}
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">包含小写字母:</span>
+                            <span class="text-${/[a-z]/.test(generatedPassword.value) ? 'success' : 'error'}">
+                                ${/[a-z]/.test(generatedPassword.value) ? '✓' : '✗'}
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">包含数字:</span>
+                            <span class="text-${/[0-9]/.test(generatedPassword.value) ? 'success' : 'error'}">
+                                ${/[0-9]/.test(generatedPassword.value) ? '✓' : '✗'}
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">包含特殊字符:</span>
+                            <span class="text-${/[^a-zA-Z0-9]/.test(generatedPassword.value) ? 'success' : 'error'}">
+                                ${/[^a-zA-Z0-9]/.test(generatedPassword.value) ? '✓' : '✗'}
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-medium">唯一性:</span>
+                            <span>${new Set(generatedPassword.value).size / generatedPassword.value.length >= 0.7 ? '良好' : '一般'}</span>
+                        </div>
+                `;
+                
+                if (strength.feedback.length > 0) {
+                    html += `
+                        <div>
+                            <span class="font-medium">改进建议:</span>
+                            <ul class="list-disc pl-5 mt-2 text-sm text-gray-600">
+                                ${strength.feedback.map(f => `<li>${f}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+                
+                html += '</div>';
+                analysisDiv.innerHTML = html;
+            }
+            
+            // 添加到历史记录
+            function addToHistory(password, strength) {
+                const historyItem = {
+                    password,
+                    strength: strength.strength,
+                    timestamp: new Date().toLocaleString()
+                };
+                
+                passwordHistory.unshift(historyItem);
+                
+                // 限制历史记录数量
+                if (passwordHistory.length > 10) {
+                    passwordHistory.pop();
+                }
+                
+                // 保存到本地存储
+                localStorage.setItem('passwordHistory', JSON.stringify(passwordHistory));
+                
+                // 更新历史记录显示
+                updateHistoryDisplay();
+            }
+            
+            // 更新历史记录显示
+            function updateHistoryDisplay() {
+                if (passwordHistory.length === 0) {
+                    historyDiv.innerHTML = `
+                        <div class="text-center text-gray-500 py-4">
+                            <i class="fa fa-history text-xl mb-2"></i>
+                            <p>暂无密码历史</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                historyDiv.innerHTML = `
+                    <div class="space-y-3">
+                        ${passwordHistory.map(item => `
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                                <div>
+                                    <div class="font-mono text-sm mb-1">${item.password}</div>
+                                    <div class="text-xs text-gray-500">${item.timestamp}</div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs px-2 py-1 rounded bg-${getStrengthColor(item.strength)}-100 text-${getStrengthColor(item.strength)}-800">
+                                        ${getStrengthText(item.strength)}
+                                    </span>
+                                    <button class="btn btn-sm btn-secondary copy-history" data-password="${item.password}">
+                                        <i class="fa fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                // 复制历史密码
+                historyDiv.querySelectorAll('.copy-history').forEach(button => {
+                    button.addEventListener('click', async () => {
+                        const password = button.getAttribute('data-password');
+                        const success = await Utils.copyToClipboard(password);
+                        if (success) {
+                            Utils.showNotification('密码已复制到剪贴板', 'success');
+                        }
+                    });
+                });
+            }
+            
+            // 获取强度颜色
+            function getStrengthColor(strength) {
+                const colors = {
+                    'weak': 'error',
+                    'fair': 'warning',
+                    'good': 'info',
+                    'strong': 'success'
+                };
+                return colors[strength] || 'gray';
+            }
+            
+            // 初始化
+            updateHistoryDisplay();
+        }
+        
+        // 单位转换器
+        function initUnitConverter() {
+            const conversionTypeButtons = document.querySelectorAll('.conversion-type');
+            const fromValue = document.getElementById('from-value');
+            const toValue = document.getElementById('to-value');
+            const fromUnit = document.getElementById('from-unit');
+            const toUnit = document.getElementById('to-unit');
+            const convertBtn = document.getElementById('convert-btn');
+            const swapBtn = document.getElementById('swap-units-btn');
+            const conversionTable = document.getElementById('conversion-table tbody');
+            
+            let currentType = 'length';
+            
+            // 单位名称映射
+            const unitNames = {
+                length: {
+                    'mm': '毫米 (mm)',
+                    'cm': '厘米 (cm)',
+                    'm': '米 (m)',
+                    'km': '千米 (km)',
+                    'in': '英寸 (in)',
+                    'ft': '英尺 (ft)',
+                    'yd': '码 (yd)',
+                    'mi': '英里 (mi)',
+                    'nmi': '海里 (nmi)'
+                },
+                weight: {
+                    'mg': '毫克 (mg)',
+                    'g': '克 (g)',
+                    'kg': '千克 (kg)',
+                    't': '吨 (t)',
+                    'oz': '盎司 (oz)',
+                    'lb': '磅 (lb)',
+                    'st': '英石 (st)'
+                },
+                temperature: {
+                    'c': '摄氏度 (°C)',
+                    'f': '华氏度 (°F)',
+                    'k': '开尔文 (K)',
+                    'r': '兰氏度 (°R)'
+                },
+                area: {
+                    'mm2': '平方毫米 (mm²)',
+                    'cm2': '平方厘米 (cm²)',
+                    'm2': '平方米 (m²)',
+                    'km2': '平方千米 (km²)',
+                    'in2': '平方英寸 (in²)',
+                    'ft2': '平方英尺 (ft²)',
+                    'yd2': '平方码 (yd²)',
+                    'acre': '英亩 (acre)',
+                    'hectare': '公顷 (ha)'
+                },
+                volume: {
+                    'mm3': '立方毫米 (mm³)',
+                    'cm3': '立方厘米 (cm³)',
+                    'm3': '立方米 (m³)',
+                    'l': '升 (l)',
+                    'ml': '毫升 (ml)',
+                    'in3': '立方英寸 (in³)',
+                    'ft3': '立方英尺 (ft³)',
+                    'gal': '加仑 (gal)',
+                    'qt': '夸脱 (qt)',
+                    'pt': '品脱 (pt)',
+                    'cup': '杯 (cup)'
+                },
+                speed: {
+                    'm/s': '米/秒 (m/s)',
+                    'km/h': '千米/时 (km/h)',
+                    'mph': '英里/时 (mph)',
+                    'ft/s': '英尺/秒 (ft/s)',
+                    'knot': '节 (knot)'
+                },
+                data: {
+                    'b': '字节 (B)',
+                    'kb': '千字节 (KB)',
+                    'mb': '兆字节 (MB)',
+                    'gb': '吉字节 (GB)',
+                    'tb': '太字节 (TB)',
+                    'pb': '拍字节 (PB)'
+                },
+                time: {
+                    's': '秒 (s)',
+                    'min': '分钟 (min)',
+                    'h': '小时 (h)',
+                    'd': '天 (d)',
+                    'w': '周 (w)',
+                    'month': '月 (month)',
+                    'year': '年 (year)'
+                }
+            };
+            
+            // 转换类型切换
+            conversionTypeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    conversionTypeButtons.forEach(btn => btn.classList.remove('active', 'btn-primary'));
+                    conversionTypeButtons.forEach(btn => btn.classList.add('btn-secondary'));
+                    button.classList.add('active', 'btn-primary');
+                    button.classList.remove('btn-secondary');
+                    
+                    currentType = button.getAttribute('data-type');
+                    updateUnitOptions();
+                    clearValues();
+                });
+            });
+            
+            // 转换按钮
+            convertBtn.addEventListener('click', () => {
+                convert();
+            });
+            
+            // 输入值变化时自动转换
+            fromValue.addEventListener('input', () => {
+                convert();
+            });
+            
+            // 单位变化时自动转换
+            fromUnit.addEventListener('change', () => {
+                convert();
+            });
+            
+            toUnit.addEventListener('change', () => {
+                convert();
+            });
+            
+            // 交换单位
+            swapBtn.addEventListener('click', () => {
+                const tempUnit = fromUnit.value;
+                fromUnit.value = toUnit.value;
+                toUnit.value = tempUnit;
+                convert();
+            });
+            
+            // 更新单位选项
+            function updateUnitOptions() {
+                const units = Object.keys(unitNames[currentType]);
+                
+                fromUnit.innerHTML = '';
+                toUnit.innerHTML = '';
+                
+                units.forEach(unit => {
+                    const option1 = document.createElement('option');
+                    option1.value = unit;
+                    option1.textContent = unitNames[currentType][unit];
+                    fromUnit.appendChild(option1);
+                    
+                    const option2 = document.createElement('option');
+                    option2.value = unit;
+                    option2.textContent = unitNames[currentType][unit];
+                    toUnit.appendChild(option2);
+                });
+                
+                // 设置默认值
+                if (units.length > 1) {
+                    toUnit.selectedIndex = 1;
+                }
+                
+                updateConversionTable();
+            }
+            
+            // 转换计算
+            function convert() {
+                const value = parseFloat(fromValue.value);
+                
+                if (isNaN(value)) {
+                    toValue.value = '';
+                    updateConversionTable();
+                    return;
+                }
+                
+                try {
+                    const result = Tools.unitConverter.convert(
+                        value,
+                        fromUnit.value,
+                        toUnit.value,
+                        currentType
+                    );
+                    
+                    toValue.value = formatResult(result);
+                    updateConversionTable(value);
+                    
+                } catch (error) {
+                    Utils.showNotification(`转换错误: ${error.message}`, 'error');
+                }
+            }
+            
+            // 更新转换表
+            function updateConversionTable(value = 1) {
+                const units = Object.keys(unitNames[currentType]);
+                const baseUnit = fromUnit.value;
+                
+                conversionTable.innerHTML = '';
+                
+                units.forEach(unit => {
+                    if (unit !== baseUnit) {
+                        try {
+                            const result = Tools.unitConverter.convert(value, baseUnit, unit, currentType);
+                            
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td class="p-3 border-b border-gray-700">${unitNames[currentType][unit]}</td>
+                                <td class="p-3 text-right border-b border-gray-700 font-mono">${formatResult(result)}</td>
+                            `;
+                            
+                            conversionTable.appendChild(row);
+                        } catch (error) {
+                            console.error('转换表更新错误:', error);
+                        }
+                    }
+                });
+            }
+            
+            // 格式化结果
+            function formatResult(result) {
+                if (Math.abs(result) >= 1000000) {
+                    return result.toExponential(6);
+                } else if (Math.abs(result) < 0.000001 && result !== 0) {
+                    return result.toExponential(6);
+                } else {
+                    // 保留适当的小数位数
+                    return parseFloat(result.toFixed(10)).toString();
+                }
+            }
+            
+            // 清空值
+            function clearValues() {
+                fromValue.value = '';
+                toValue.value = '';
+            }
+            
+            // 初始化
+            updateUnitOptions();
+        }
+        
+        // 数据可视化工具
+        function initDataVisualization() {
+            const chartTypeButtons = document.querySelectorAll('.chart-type');
+            const generateBtn = document.getElementById('generate-chart-btn');
+            const generateRandomBtn = document.getElementById('generate-random-btn');
+            const chartCanvas = document.getElementById('chart-canvas');
+            const chartTitle = document.getElementById('chart-title');
+            const chartLabels = document.getElementById('chart-labels');
+            const chartData = document.getElementById('chart-data');
+            const chartColors = document.getElementById('chart-colors');
+            const downloadPngBtn = document.getElementById('download-chart-png');
+            const downloadSvgBtn = document.getElementById('download-chart-svg');
+            const downloadDataBtn = document.getElementById('download-chart-data');
+            
+            let currentChart = null;
+            let currentType = 'bar';
+            
+            // 图表类型切换
+            chartTypeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    chartTypeButtons.forEach(btn => btn.classList.remove('active', 'btn-primary'));
+                    chartTypeButtons.forEach(btn => btn.classList.add('btn-secondary'));
+                    button.classList.add('active', 'btn-primary');
+                    button.classList.remove('btn-secondary');
+                    
+                    currentType = button.getAttribute('data-type');
+                });
+            });
+            
+            // 生成图表
+            generateBtn.addEventListener('click', () => {
+                generateChart();
+            });
+            
+            // 生成随机数据
+            generateRandomBtn.addEventListener('click', () => {
+                generateRandomData();
+                generateChart();
+            });
+            
+            // 下载PNG
+            downloadPngBtn.addEventListener('click', () => {
+                if (!currentChart) {
+                    Utils.showNotification('请先生成图表', 'warning');
+                    return;
+                }
+                
+                const dataURL = chartCanvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.download = 'chart.png';
+                link.href = dataURL;
+                link.click();
+                
+                Utils.showNotification('图表下载成功', 'success');
+            });
+            
+            // 下载SVG
+            downloadSvgBtn.addEventListener('click', () => {
+                if (!currentChart) {
+                    Utils.showNotification('请先生成图表', 'warning');
+                    return;
+                }
+                
+                // 这里简化处理，实际应该生成SVG
+                Utils.showNotification('SVG下载功能开发中', 'info');
+            });
+            
+            // 下载数据
+            downloadDataBtn.addEventListener('click', () => {
+                if (!currentChart) {
+                    Utils.showNotification('请先生成图表', 'warning');
+                    return;
+                }
+                
+                const labels = chartLabels.value.split(',').map(l => l.trim());
+                const data = chartData.value.split(',').map(d => parseFloat(d.trim()));
+                
+                const csvData = [
+                    ['Label', 'Value'],
+                    ...labels.map((label, index) => [label, data[index] || 0])
+                ];
+                
+                const csvContent = csvData.map(row => row.join(',')).join('\n');
+                Utils.downloadFile(csvContent, 'chart-data.csv', 'text/csv');
+                
+                Utils.showNotification('数据下载成功', 'success');
+            });
+            
+            // 生成图表
+            function generateChart() {
+                const title = chartTitle.value.trim() || '数据可视化';
+                const labels = chartLabels.value.split(',').map(l => l.trim()).filter(l => l);
+                const data = chartData.value.split(',').map(d => parseFloat(d.trim())).filter(d => !isNaN(d));
+                const colors = chartColors.value.split(',').map(c => c.trim()).filter(c => c);
+                
+                if (labels.length === 0 || data.length === 0) {
+                    Utils.showNotification('请输入标签和数据', 'warning');
+                    return;
+                }
+                
+                // 确保数据长度与标签长度一致
+                const chartData = {
+                    labels: labels.slice(0, data.length),
+                    datasets: [{
+                        label: '数据',
+                        data: data.slice(0, labels.length),
+                        backgroundColor: colors.length > 0 ? colors : Tools.dataVisualization.generateChartColors(data.length),
+                        borderColor: colors.length > 0 ? colors.map(c => c + '80') : Tools.dataVisualization.generateChartColors(data.length).map(c => c + '80'),
+                        borderWidth: 2
+                    }]
+                };
+                
+                // 销毁现有图表
+                if (currentChart) {
+                    currentChart.destroy();
+                }
+                
+                // 创建新图表
+                currentChart = Tools.dataVisualization.createChart(currentType, chartData, chartCanvas, {
+                    title: title
+                });
+                
+                Utils.showNotification('图表生成成功', 'success');
+            }
+            
+            // 生成随机数据
+            function generateRandomData() {
+                const labels = ['一月', '二月', '三月', '四月', '五月', '六月'];
+                const data = Tools.dataVisualization.generateRandomData(6, 10, 100);
+                
+                chartTitle.value = '月度销售数据';
+                chartLabels.value = labels.join(',');
+                chartData.value = data.join(',');
+                chartColors.value = '';
+            }
+            
+            // 初始化示例数据
+            generateRandomData();
+        }
+        
+        // 主题切换
+        function initThemeToggle() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const icon = themeToggle.querySelector('i');
+            
+            // 设置初始图标
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            icon.className = currentTheme === 'dark' ? 'fa fa-sun-o' : 'fa fa-moon-o';
+            
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                // 切换主题
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                // 更新图标
+                icon.className = newTheme === 'dark' ? 'fa fa-sun-o' : 'fa fa-moon-o';
+                
+                // 显示通知
+                Utils.showNotification(`已切换到${newTheme === 'dark' ? '深色' : '浅色'}模式`, 'success');
+            });
+        }
+        
+        // 移动端菜单
+        function initMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('show');
+                mobileMenuOverlay.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            function closeMenu() {
+                mobileMenu.classList.remove('show');
+                mobileMenuOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+            
+            closeMenuBtn.addEventListener('click', closeMenu);
+            mobileMenuOverlay.addEventListener('click', closeMenu);
+            
+            // 菜单项点击后关闭菜单
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+        }
+        
+        // 回到顶部按钮
+        function initBackToTop() {
+            const backToTopBtn = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 500) {
+                    backToTopBtn.classList.remove('opacity-0', 'invisible');
+                    backToTopBtn.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopBtn.classList.remove('opacity-100', 'visible');
+                    backToTopBtn.classList.add('opacity-0', 'invisible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+        
+        // 导航栏滚动效果
+        function initNavbarScroll() {
+            window.addEventListener('scroll', () => {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

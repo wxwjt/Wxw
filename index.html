@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具总和 - 实用工具与游戏平台</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- GSAP 动画库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- AOS 滚动动画 -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <!-- 主样式文件 -->
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 min-h-screen grid-bg">
+    <!-- 导航栏 -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50 bg-glass">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-wrench text-2xl text-primary"></i>
+                <span class="text-xl font-bold text-gradient">工具总和</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="nav-link active">首页</a>
+                <a href="pages/tools.html" class="nav-link">工具集</a>
+                <a href="pages/snake-game.html" class="nav-link">贪吃蛇游戏</a>
+                <a href="pages/about.html" class="nav-link">关于我们</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="btn btn-icon btn-ghost" title="切换主题">
+                    <i class="fa fa-moon-o"></i>
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden btn btn-icon btn-ghost">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 移动端菜单 -->
+    <div id="mobile-menu" class="mobile-menu">
+        <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-wrench text-2xl text-primary"></i>
+                <span class="text-xl font-bold text-gradient">工具总和</span>
+            </div>
+            <button id="close-menu-btn" class="btn btn-icon btn-ghost">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-4">
+            <a href="index.html" class="btn btn-lg btn-block btn-outline">首页</a>
+            <a href="pages/tools.html" class="btn btn-lg btn-block btn-outline">工具集</a>
+            <a href="pages/snake-game.html" class="btn btn-lg btn-block btn-outline">贪吃蛇游戏</a>
+            <a href="pages/about.html" class="btn btn-lg btn-block btn-outline">关于我们</a>
+        </div>
+    </div>
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div>
+
+    <!-- 英雄区域 -->
+    <section class="hero relative overflow-hidden pt-32 pb-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6" data-aos="fade-up">
+                <span class="text-gradient">实用工具</span>
+                <br>创意无限
+            </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8" data-aos="fade-up" data-aos-delay="100">
+                探索我们精心打造的实用工具集合，提升工作效率，释放创造力。
+                所有工具均支持离线使用，完全免费。
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12" data-aos="fade-up" data-aos-delay="200">
+                <a href="pages/tools.html" class="btn btn-gradient btn-lg">
+                    <i class="fa fa-tools mr-2"></i> 探索工具
+                </a>
+                <a href="pages/snake-game.html" class="btn btn-primary btn-lg">
+                    <i class="fa fa-gamepad mr-2"></i> 开始游戏
+                </a>
+            </div>
+            
+            <!-- 装饰元素 -->
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-full pointer-events-none">
+                <div class="absolute top-0 left-0 w-64 h-64 bg-primary/10 rounded-full filter blur-3xl"></div>
+                <div class="absolute bottom-0 right-0 w-80 h-80 bg-secondary/10 rounded-full filter blur-3xl"></div>
+                <div class="absolute top-1/2 right-1/4 w-40 h-40 bg-accent/10 rounded-full filter blur-3xl"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特色工具展示 -->
+    <section class="features py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">
+                    <span class="text-gradient">特色工具</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    我们提供多种实用工具，满足您的各种需求
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 代码格式化工具 -->
+                <div class="card glass" data-aos="fade-up" data-aos-delay="150">
+                    <div class="card-body p-6">
+                        <div class="w-16 h-16 bg-primary/20 rounded-lg flex items-center justify-center mb-6">
+                            <i class="fa fa-code text-3xl text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">代码格式化工具</h3>
+                        <p class="text-gray-600 mb-4">
+                            支持JavaScript、HTML、CSS、JSON等多种编程语言的代码格式化和压缩。
+                        </p>
+                        <a href="pages/tools.html#code-formatter" class="btn btn-outline btn-sm">
+                            <i class="fa fa-arrow-right mr-2"></i> 使用工具
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 像素艺术生成器 -->
+                <div class="card glass" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-body p-6">
+                        <div class="w-16 h-16 bg-secondary/20 rounded-lg flex items-center justify-center mb-6">
+                            <i class="fa fa-paint-brush text-3xl text-secondary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">像素艺术生成器</h3>
+                        <p class="text-gray-600 mb-4">
+                            创建精美的像素艺术作品，支持多种绘图工具和颜色选择。
+                        </p>
+                        <a href="pages/tools.html#pixel-art-generator" class="btn btn-outline btn-sm">
+                            <i class="fa fa-arrow-right mr-2"></i> 使用工具
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 科学计算器 -->
+                <div class="card glass" data-aos="fade-up" data-aos-delay="250">
+                    <div class="card-body p-6">
+                        <div class="w-16 h-16 bg-accent/20 rounded-lg flex items-center justify-center mb-6">
+                            <i class="fa fa-calculator text-3xl text-accent"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">科学计算器</h3>
+                        <p class="text-gray-600 mb-4">
+                            功能强大的科学计算器，支持复杂数学运算和函数计算。
+                        </p>
+                        <a href="pages/tools.html#scientific-calculator" class="btn btn-outline btn-sm">
+                            <i class="fa fa-arrow-right mr-2"></i> 使用工具
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 二维码生成器 -->
+                <div class="card glass" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-body p-6">
+                        <div class="w-16 h-16 bg-success/20 rounded-lg flex items-center justify-center mb-6">
+                            <i class="fa fa-qrcode text-3xl text-success"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">二维码生成器</h3>
+                        <p class="text-gray-600 mb-4">
+                            快速生成文本、URL、联系人信息的二维码，支持自定义样式。
+                        </p>
+                        <a href="pages/tools.html#qr-code-generator" class="btn btn-outline btn-sm">
+                            <i class="fa fa-arrow-right mr-2"></i> 使用工具
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 颜色选择器 -->
+                <div class="card glass" data-aos="fade-up" data-aos-delay="350">
+                    <div class="card-body p-6">
+                        <div class="w-16 h-16 bg-warning/20 rounded-lg flex items-center justify-center mb-6">
+                            <i class="fa fa-eyedropper text-3xl text-warning"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">颜色选择器</h3>
+                        <p class="text-gray-600 mb-4">
+                            专业的颜色选择和转换工具，支持RGB、HSL、HEX等多种格式。
+                        </p>
+                        <a href="pages/tools.html#color-picker" class="btn btn-outline btn-sm">
+                            <i class="fa fa-arrow-right mr-2"></i> 使用工具
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 密码生成器 -->
+                <div class="card glass" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card-body p-6">
+                        <div class="w-16 h-16 bg-error/20 rounded-lg flex items-center justify-center mb-6">
+                            <i class="fa fa-key text-3xl text-error"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">密码生成器</h3>
+                        <p class="text-gray-600 mb-4">
+                            生成安全强密码，支持自定义规则和密码强度检测。
+                        </p>
+                        <a href="pages/tools.html#password-generator" class="btn btn-outline btn-sm">
+                            <i class="fa fa-arrow-right mr-2"></i> 使用工具
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 游戏区域 -->
+    <section class="games py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">
+                    <span class="text-gradient">趣味游戏</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    在工作之余放松一下，享受我们精心准备的小游戏
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 贪吃蛇游戏 -->
+                <div class="card glass-dark" data-aos="fade-up" data-aos-delay="150">
+                    <div class="relative overflow-hidden">
+                        <div class="h-48 bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                            <i class="fa fa-gamepad text-6xl text-white"></i>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span class="badge bg-primary">热门</span>
+                        </div>
+                    </div>
+                    <div class="card-body p-6">
+                        <h3 class="text-xl font-bold mb-3">贪吃蛇游戏</h3>
+                        <p class="text-gray-300 mb-4">
+                            经典贪吃蛇游戏，多种模式和难度选择，挑战你的反应能力。
+                        </p>
+                        <a href="pages/snake-game.html" class="btn btn-primary btn-sm">
+                            <i class="fa fa-play mr-2"></i> 开始游戏
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 2048游戏 -->
+                <div class="card glass-dark" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative overflow-hidden">
+                        <div class="h-48 bg-gradient-to-br from-accent to-secondary flex items-center justify-center">
+                            <span class="text-6xl font-bold text-white">2048</span>
+                        </div>
+                    </div>
+                    <div class="card-body p-6">
+                        <h3 class="text-xl font-bold mb-3">2048游戏</h3>
+                        <p class="text-gray-300 mb-4">
+                            经典2048数字合并游戏，锻炼你的策略思维和数学能力。
+                        </p>
+                        <a href="pages/2048-game.html" class="btn btn-outline btn-sm">
+                            <i class="fa fa-play mr-2"></i> 开始游戏
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 记忆配对游戏 -->
+                <div class="card glass-dark" data-aos="fade-up" data-aos-delay="250">
+                    <div class="relative overflow-hidden">
+                        <div class="h-48 bg-gradient-to-br from-warning to-error flex items-center justify-center">
+                            <i class="fa fa-puzzle-piece text-6xl text-white"></i>
+                        </div>
+                    </div>
+                    <div class="card-body p-6">
+                        <h3 class="text-xl font-bold mb-3">记忆配对游戏</h3>
+                        <p class="text-gray-300 mb-4">
+                            考验记忆力的配对游戏，多种主题和难度，适合所有年龄段。
+                        </p>
+                        <a href="pages/memory-game.html" class="btn btn-outline btn-sm">
+                            <i class="fa fa-play mr-2"></i> 开始游戏
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能特点 -->
+    <section class="features py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">
+                    <span class="text-gradient">为什么选择我们</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    我们致力于提供最好的用户体验和最实用的工具
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- 完全免费 -->
+                <div class="text-center" data-aos="fade-up" data-aos-delay="150">
+                    <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa fa-gift text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">完全免费</h3>
+                    <p class="text-gray-600">
+                        所有工具和游戏完全免费使用，无需注册或付费。
+                    </p>
+                </div>
+                
+                <!-- 离线可用 -->
+                <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa fa-wifi text-3xl text-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">离线可用</h3>
+                    <p class="text-gray-600">
+                        大多数工具支持离线使用，随时随地都能工作。
+                    </p>
+                </div>
+                
+                <!-- 隐私保护 -->
+                <div class="text-center" data-aos="fade-up" data-aos-delay="250">
+                    <div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa fa-shield text-3xl text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">隐私保护</h3>
+                    <p class="text-gray-600">
+                        所有数据在本地处理，不会上传到服务器，保护您的隐私。
+                    </p>
+                </div>
+                
+                <!-- 响应式设计 -->
+                <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-success/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fa fa-mobile text-3xl text-success"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">响应式设计</h3>
+                    <p class="text-gray-600">
+                        完美适配桌面端和移动端，随时随地都能使用。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 用户评价 -->
+    <section class="testimonials py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-aos="fade-up">
+                    <span class="text-gradient">用户评价</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    听听我们的用户怎么说
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 评价1 -->
+                <div class="card glass" data-aos="fade-up" data-aos-delay="150">
+                    <div class="card-body p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="text-warning">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6 italic">
+                            "这个网站的工具非常实用，特别是代码格式化工具，帮我节省了大量时间。界面设计也很美观，使用体验很棒！"
+                        </p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-xl font-bold text-primary">张</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">张小明</h4>
+                                <p class="text-sm text-gray-500">前端开发者</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 评价2 -->
+                <div class="card glass" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-body p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="text-warning">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half-o"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6 italic">
+                            "像素艺术生成器是我的最爱，功能强大且易于使用。贪吃蛇游戏也很有趣，在工作之余放松一下非常合适。"
+                        </p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-xl font-bold text-secondary">李</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">李华</h4>
+                                <p class="text-sm text-gray-500">UI设计师</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 评价3 -->
+                <div class="card glass" data-aos="fade-up" data-aos-delay="250">
+                    <div class="card-body p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="text-warning">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-6 italic">
+                            "作为一名学生，这个网站的科学计算器和单位转换器对我帮助很大。界面简洁明了，功能齐全，强烈推荐！"
+                        </p>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-xl font-bold text-accent">王</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">王小红</h4>
+                                <p class="text-sm text-gray-500">大学生</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="contact py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto glass rounded-2xl overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="p-8 bg-gradient-to-br from-primary to-secondary text-white">
+                        <h2 class="text-3xl font-bold mb-6">联系我们</h2>
+                        <p class="mb-8">
+                            有任何问题或建议？请随时联系我们，我们会尽快回复您。
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fa fa-envelope text-xl mr-4 mt-1"></i>
+                                <span>contact@toolcollection.com</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-phone text-xl mr-4 mt-1"></i>
+                                <span>+1 (123) 456-7890</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fa fa-map-marker text-xl mr-4 mt-1"></i>
+                                <span>123 Tech Street, Digital City</span>
+                            </div>
+                        </div>
+                        <div class="mt-8 flex space-x-4">
+                            <a href="#" class="btn btn-icon btn-ghost text-white hover:bg-white/20">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a href="#" class="btn btn-icon btn-ghost text-white hover:bg-white/20">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a href="#" class="btn btn-icon btn-ghost text-white hover:bg-white/20">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                            <a href="#" class="btn btn-icon btn-ghost text-white hover:bg-white/20">
+                                <i class="fa fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <form id="contact-form" class="space-y-6">
+                            <div>
+                                <label for="name" class="form-label">姓名</label>
+                                <input type="text" id="name" class="form-input" placeholder="请输入您的姓名" required>
+                            </div>
+                            <div>
+                                <label for="email" class="form-label">邮箱</label>
+                                <input type="email" id="email" class="form-input" placeholder="请输入您的邮箱" required>
+                            </div>
+                            <div>
+                                <label for="subject" class="form-label">主题</label>
+                                <input type="text" id="subject" class="form-input" placeholder="请输入主题" required>
+                            </div>
+                            <div>
+                                <label for="message" class="form-label">留言</label>
+                                <textarea id="message" rows="4" class="form-input" placeholder="请输入您的留言" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-gradient btn-block">
+                                <i class="fa fa-paper-plane mr-2"></i> 发送留言
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <i class="fa fa-wrench text-2xl text-primary"></i>
+                        <span class="text-xl font-bold text-gradient">工具总和</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        您的一站式工具和游戏平台，让数字生活更加便捷和有趣。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="pages/tools.html">工具集</a></li>
+                        <li><a href="pages/snake-game.html">贪吃蛇游戏</a></li>
+                        <li><a href="pages/about.html">关于我们</a></li>
+                        <li><a href="pages/contact.html">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">热门工具</h3>
+                    <ul class="footer-links">
+                        <li><a href="pages/tools.html#code-formatter">代码格式化工具</a></li>
+                        <li><a href="pages/tools.html#pixel-art-generator">像素艺术生成器</a></li>
+                        <li><a href="pages/tools.html#scientific-calculator">科学计算器</a></li>
+                        <li><a href="pages/tools.html#qr-code-generator">二维码生成器</a></li>
+                        <li><a href="pages/tools.html#password-generator">密码生成器</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">热门游戏</h3>
+                    <ul class="footer-links">
+                        <li><a href="pages/snake-game.html">贪吃蛇游戏</a></li>
+                        <li><a href="pages/2048-game.html">2048游戏</a></li>
+                        <li><a href="pages/memory-game.html">记忆配对游戏</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-500">© 2024 工具总和. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <button id="back-to-top" class="btn btn-icon btn-primary fixed bottom-8 right-8 opacity-0 invisible transition-all duration-300">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <!-- 通用工具 JavaScript -->
+    <script src="assets/js/utils.js"></script>
+    
+    <!-- 页面 JavaScript -->
+    <script>
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化AOS动画
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 100
+            });
+            
+            // 初始化GSAP动画
+            initGSAPAnimations();
+            
+            // 初始化主题切换
+            initThemeToggle();
+            
+            // 初始化移动端菜单
+            initMobileMenu();
+            
+            // 初始化回到顶部按钮
+            initBackToTop();
+            
+            // 初始化联系表单
+            initContactForm();
+            
+            // 导航栏滚动效果
+            initNavbarScroll();
+        });
+        
+        // GSAP动画初始化
+        function initGSAPAnimations() {
+            // 英雄区域动画
+            gsap.from('.hero h1', {
+                opacity: 0,
+                y: -50,
+                duration: 1,
+                delay: 0.2
+            });
+            
+            gsap.from('.hero p', {
+                opacity: 0,
+                y: -30,
+                duration: 1,
+                delay: 0.4
+            });
+            
+            gsap.from('.hero .btn', {
+                opacity: 0,
+                y: 30,
+                duration: 1,
+                delay: 0.6,
+                stagger: 0.2
+            });
+            
+            // 特色工具卡片动画
+            gsap.from('.features .card', {
+                scrollTrigger: {
+                    trigger: '.features',
+                    start: 'top 80%'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                stagger: 0.1
+            });
+            
+            // 游戏卡片动画
+            gsap.from('.games .card', {
+                scrollTrigger: {
+                    trigger: '.games',
+                    start: 'top 80%'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                stagger: 0.1
+            });
+        }
+        
+        // 主题切换
+        function initThemeToggle() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const icon = themeToggle.querySelector('i');
+            
+            // 设置初始图标
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            icon.className = currentTheme === 'dark' ? 'fa fa-sun-o' : 'fa fa-moon-o';
+            
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                // 切换主题
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                // 更新图标
+                icon.className = newTheme === 'dark' ? 'fa fa-sun-o' : 'fa fa-moon-o';
+                
+                // 显示通知
+                Utils.showNotification(`已切换到${newTheme === 'dark' ? '深色' : '浅色'}模式`, 'success');
+            });
+        }
+        
+        // 移动端菜单
+        function initMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('show');
+                mobileMenuOverlay.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            function closeMenu() {
+                mobileMenu.classList.remove('show');
+                mobileMenuOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+            
+            closeMenuBtn.addEventListener('click', closeMenu);
+            mobileMenuOverlay.addEventListener('click', closeMenu);
+            
+            // 菜单项点击后关闭菜单
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+        }
+        
+        // 回到顶部按钮
+        function initBackToTop() {
+            const backToTopBtn = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 500) {
+                    backToTopBtn.classList.remove('opacity-0', 'invisible');
+                    backToTopBtn.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopBtn.classList.remove('opacity-100', 'visible');
+                    backToTopBtn.classList.add('opacity-0', 'invisible');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+        
+        // 联系表单
+        function initContactForm() {
+            const contactForm = document.getElementById('contact-form');
+            
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                // 模拟表单提交
+                Utils.showNotification('留言已发送，我们会尽快回复您！', 'success');
+                
+                // 清空表单
+                contactForm.reset();
+            });
+        }
+        
+        // 导航栏滚动效果
+        function initNavbarScroll() {
+            window.addEventListener('scroll', () => {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
