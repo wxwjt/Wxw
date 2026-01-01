@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具总和 - 现代工具集合网站</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- GSAP 动画库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- AOS 滚动动画 -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#8B5CF6',
+                        accent: '#10B981',
+                        dark: '#1E293B',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        pixel: ['VT323', 'monospace']
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 3s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-gradient {
+                @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+            }
+            .bg-glass {
+                @apply bg-white/10 backdrop-blur-md border border-white/20;
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-lg hover:scale-105 hover:-translate-y-1;
+            }
+            .pixel-border {
+                @apply border-4 border-dark relative before:absolute before:inset-0 before:border-2 before:border-white before:translate-x-2 before:translate-y-2 before:-z-10;
+            }
+        }
+        
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1E293B;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #3B82F6, #8B5CF6);
+            border-radius: 4px;
+        }
+        
+        /* 像素风格动画 */
+        @keyframes pixelate {
+            0% { filter: blur(0); }
+            50% { filter: blur(1px); }
+            100% { filter: blur(0); }
+        }
+        .pixel-animation {
+            animation: pixelate 2s infinite;
+        }
+        
+        /* 网格背景 */
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-dark to-gray-900 text-light min-h-screen">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-glass">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-wrench text-2xl text-primary"></i>
+                <span class="text-xl font-bold text-gradient">工具总和</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="hover:text-primary transition-colors">首页</a>
+                <a href="#tools" class="hover:text-primary transition-colors">工具集</a>
+                <a href="#snake-game" class="hover:text-primary transition-colors">贪吃蛇游戏</a>
+                <a href="#about" class="hover:text-primary transition-colors">关于我们</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobile-menu-btn">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-glass absolute w-full">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="#home" class="hover:text-primary transition-colors">首页</a>
+                <a href="#tools" class="hover:text-primary transition-colors">工具集</a>
+                <a href="#snake-game" class="hover:text-primary transition-colors">贪吃蛇游戏</a>
+                <a href="#about" class="hover:text-primary transition-colors">关于我们</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden grid-bg pt-16">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-dark opacity-80"></div>
+        <div class="container mx-auto px-4 py-20 relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-10 md:mb-0" data-aos="fade-right">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                        <span class="text-gradient">现代工具</span><br>
+                        <span class="text-white">集合平台</span>
+                    </h1>
+                    <p class="text-xl mb-8 text-gray-300">
+                        探索创新工具，提升工作效率，释放创造力。从像素艺术到实用工具，一站式解决方案。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#tools" class="bg-gradient-to-r from-primary to-secondary px-8 py-3 rounded-lg font-medium hover:shadow-lg hover:shadow-primary/20 transition-all">
+                            探索工具
+                        </a>
+                        <a href="#snake-game" class="bg-transparent border-2 border-primary px-8 py-3 rounded-lg font-medium hover:bg-primary/10 transition-all">
+                            贪吃蛇游戏
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center" data-aos="fade-left">
+                    <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/86cc53286464498f8088fda16c0f39b2~tplv-a9rns2rl98-image.image?rcl=202601011740067BABCDD31C2BB12A4C20&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1769852431&x-signature=NXw09FZUwVJDezACcjJl20L%2Fqtg%3D" 
+                         alt="工具集合" 
+                         class="w-full max-w-md rounded-xl shadow-2xl shadow-primary/20 animate-float">
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#tools" class="text-white/70 hover:text-white">
+                <i class="fa fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 工具集区域 -->
+    <section id="tools" class="py-20 relative grid-bg">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">
+                    <span class="text-gradient">精选工具</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    我们精心挑选了各种实用工具，帮助您在数字世界中更高效地工作和创造。
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 工具卡片 1 -->
+                <div class="bg-glass rounded-xl p-6 card-hover" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-primary/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fa fa-paint-brush text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">像素艺术生成器</h3>
+                    <p class="text-gray-300 mb-6">
+                        将您的创意转化为精美的像素艺术作品，支持多种风格和分辨率。
+                    </p>
+                    <a href="#" class="text-primary hover:text-secondary transition-colors flex items-center">
+                        使用工具 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 工具卡片 2 -->
+                <div class="bg-glass rounded-xl p-6 card-hover" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-secondary/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fa fa-code text-3xl text-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">代码格式化工具</h3>
+                    <p class="text-gray-300 mb-6">
+                        快速格式化您的代码，支持多种编程语言，提升代码可读性。
+                    </p>
+                    <a href="#" class="text-secondary hover:text-primary transition-colors flex items-center">
+                        使用工具 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 工具卡片 3 -->
+                <div class="bg-glass rounded-xl p-6 card-hover" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-accent/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fa fa-calculator text-3xl text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">科学计算器</h3>
+                    <p class="text-gray-300 mb-6">
+                        功能强大的科学计算器，支持复杂数学运算和函数计算。
+                    </p>
+                    <a href="#" class="text-accent hover:text-primary transition-colors flex items-center">
+                        使用工具 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 工具卡片 4 -->
+                <div class="bg-glass rounded-xl p-6 card-hover" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-16 h-16 bg-primary/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fa fa-clock-o text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">时间管理工具</h3>
+                    <p class="text-gray-300 mb-6">
+                        高效的时间管理工具，帮助您合理安排任务，提高工作效率。
+                    </p>
+                    <a href="#" class="text-primary hover:text-secondary transition-colors flex items-center">
+                        使用工具 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 工具卡片 5 -->
+                <div class="bg-glass rounded-xl p-6 card-hover" data-aos="fade-up" data-aos-delay="500">
+                    <div class="w-16 h-16 bg-secondary/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fa fa-image text-3xl text-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">图片编辑器</h3>
+                    <p class="text-gray-300 mb-6">
+                        简单易用的在线图片编辑器，满足您的基本图片处理需求。
+                    </p>
+                    <a href="#" class="text-secondary hover:text-primary transition-colors flex items-center">
+                        使用工具 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 工具卡片 6 -->
+                <div class="bg-glass rounded-xl p-6 card-hover" data-aos="fade-up" data-aos-delay="600">
+                    <div class="w-16 h-16 bg-accent/20 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fa fa-music text-3xl text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">音乐节拍器</h3>
+                    <p class="text-gray-300 mb-6">
+                        精确的音乐节拍器，帮助音乐家和音乐爱好者保持节奏。
+                    </p>
+                    <a href="#" class="text-accent hover:text-primary transition-colors flex items-center">
+                        使用工具 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="bg-gradient-to-r from-primary to-secondary px-8 py-3 rounded-lg font-medium hover:shadow-lg hover:shadow-primary/20 transition-all">
+                    查看更多工具
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 贪吃蛇游戏区域 -->
+    <section id="snake-game" class="py-20 relative grid-bg">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">
+                    <span class="text-gradient">复古像素风贪吃蛇</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    体验经典贪吃蛇游戏的现代演绎，采用复古像素风格和半调图案设计。
+                </p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+                <div class="lg:w-1/2" data-aos="fade-right">
+                    <div class="bg-glass rounded-xl p-6 pixel-border">
+                        <div class="relative">
+                            <!-- 游戏标题 -->
+                            <div class="absolute -top-12 left-0 right-0 text-center">
+                                <h3 class="text-2xl font-bold text-gradient animate-pulse-slow font-pixel">复古像素风贪吃蛇</h3>
+                            </div>
+                            
+                            <!-- 游戏画布容器 -->
+                            <div class="relative">
+                                <canvas id="gameCanvas" class="w-full border-4 border-dark bg-gradient-to-br from-blue-900 to-indigo-900"></canvas>
+                                
+                                <!-- 分数显示 -->
+                                <div id="scoreDisplay" class="absolute top-4 right-4 bg-black/50 backdrop-blur-sm px-4 py-2 rounded-lg font-pixel text-xl">
+                                    分数: <span id="score">0</span>
+                                </div>
+                                
+                                <!-- 游戏结束遮罩 -->
+                                <div id="gameOver" class="absolute inset-0 bg-black/70 backdrop-blur-sm flex flex-col items-center justify-center hidden">
+                                    <h3 class="text-4xl font-bold text-gradient mb-6 font-pixel">游戏结束</h3>
+                                    <p class="text-2xl mb-8 font-pixel">最终分数: <span id="finalScore">0</span></p>
+                                    <button id="restartBtn" class="bg-gradient-to-r from-primary to-secondary px-8 py-3 rounded-lg font-bold hover:scale-110 transition-transform font-pixel">
+                                        重新开始
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- 操作说明 -->
+                            <div class="mt-8 text-center font-pixel">
+                                <p class="text-gray-300">使用方向键控制蛇的移动</p>
+                                <div class="flex justify-center space-x-4 mt-2">
+                                    <button class="direction-btn bg-primary/20 hover:bg-primary/40 w-10 h-10 rounded-lg flex items-center justify-center">
+                                        <i class="fa fa-arrow-up"></i>
+                                    </button>
+                                </div>
+                                <div class="flex justify-center space-x-4 mt-2">
+                                    <button class="direction-btn bg-primary/20 hover:bg-primary/40 w-10 h-10 rounded-lg flex items-center justify-center">
+                                        <i class="fa fa-arrow-left"></i>
+                                    </button>
+                                    <button class="direction-btn bg-primary/20 hover:bg-primary/40 w-10 h-10 rounded-lg flex items-center justify-center">
+                                        <i class="fa fa-arrow-down"></i>
+                                    </button>
+                                    <button class="direction-btn bg-primary/20 hover:bg-primary/40 w-10 h-10 rounded-lg flex items-center justify-center">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lg:w-1/2" data-aos="fade-left">
+                <h3 class="text-2xl font-bold mb-6 text-gradient">游戏特色</h3>
+                <ul class="space-y-4 text-gray-300">
+                    <li class="flex items-start">
+                        <i class="fa fa-check-circle text-accent mt-1 mr-3"></i>
+                        <span>复古像素风格与半调图案的完美结合，带来视觉盛宴</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa fa-check-circle text-accent mt-1 mr-3"></i>
+                        <span>蛇身颜色随得分增加而变化，从红到紫的彩虹色彩</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa fa-check-circle text-accent mt-1 mr-3"></i>
+                        <span>食物带有闪烁效果，增加游戏的趣味性</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa fa-check-circle text-accent mt-1 mr-3"></i>
+                        <span>支持键盘和触摸屏控制，适配各种设备</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa fa-check-circle text-accent mt-1 mr-3"></i>
+                        <span>吃到食物时的像素爆炸效果，增强游戏反馈</span>
+                    </li>
+                </ul>
+                
+                <div class="mt-8">
+                    <h4 class="text-xl font-bold mb-4 text-gradient">游戏截图</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://p11-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/997014569771335737~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&x-expires=1782812437&x-signature=jUIsoOhSILKVGrVJXmOsF8cPdfE%3D" alt="像素工具" class="rounded-lg shadow-lg">
+                        <img src="https://p11-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/1818206415465349140~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&x-expires=1782812437&x-signature=iY3uah%2BVJOREdTqzXfklE1WUwzU%3D" alt="复古界面" class="rounded-lg shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我们区域 -->
+    <section id="about" class="py-20 relative grid-bg">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">
+                    <span class="text-gradient">关于我们</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    我们致力于为用户提供高质量的在线工具和游戏体验，让数字生活更加丰富多彩。
+                </p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+                <div class="md:w-1/2" data-aos="fade-right">
+                    <img src="https://p11-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/2277889687071227910~tplv-be4g95zd3a-image.jpeg?lk3s=feb11e32&x-expires=1782812437&x-signature=TXaEk7P5mjLIR2ZNdVmxWh9FU3A%3D" alt="关于我们" class="rounded-xl shadow-2xl shadow-primary/20">
+                </div>
+                
+                <div class="md:w-1/2" data-aos="fade-left">
+                    <h3 class="text-2xl font-bold mb-6 text-gradient">我们的使命</h3>
+                    <p class="text-gray-300 mb-6">
+                        在这个数字化的时代，我们相信技术应该是简单易用且美观的。我们的团队由热爱创造和解决问题的专业人士组成，致力于开发既实用又具有视觉吸引力的工具和游戏。
+                    </p>
+                    <p class="text-gray-300 mb-8">
+                        我们不断探索新的技术和设计趋势，为用户带来全新的体验。无论是提高工作效率的实用工具，还是放松娱乐的创意游戏，我们都力求做到最好。
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="bg-glass rounded-lg p-4 text-center">
+                            <div class="text-4xl font-bold text-primary mb-2">50+</div>
+                            <div class="text-gray-300">实用工具</div>
+                        </div>
+                        <div class="bg-glass rounded-lg p-4 text-center">
+                            <div class="text-4xl font-bold text-secondary mb-2">100K+</div>
+                            <div class="text-gray-300">活跃用户</div>
+                        </div>
+                        <div class="bg-glass rounded-lg p-4 text-center">
+                            <div class="text-4xl font-bold text-accent mb-2">5+</div>
+                            <div class="text-gray-300">年行业经验</div>
+                        </div>
+                        <div class="bg-glass rounded-lg p-4 text-center">
+                            <div class="text-4xl font-bold text-primary mb-2">98%</div>
+                            <div class="text-gray-300">用户满意度</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们区域 -->
+    <section class="py-20 relative grid-bg">
+        <div class="container mx-auto px-4">
+            <div class="bg-glass rounded-2xl p-8 md:p-12 max-w-4xl mx-auto" data-aos="fade-up">
+                <h2 class="text-3xl font-bold mb-8 text-center text-gradient">联系我们</h2>
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-gray-300 mb-2">姓名</label>
+                            <input type="text" id="name" class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-300 mb-2">邮箱</label>
+                            <input type="email" id="email" class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="subject" class="block text-gray-300 mb-2">主题</label>
+                        <input type="text" id="subject" class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-gray-300 mb-2">消息</label>
+                        <textarea id="message" rows="5" class="w-full bg-dark/50 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="bg-gradient-to-r from-primary to-secondary px-8 py-3 rounded-lg font-bold hover:shadow-lg hover:shadow-primary/20 transition-all">
+                            发送消息
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <i class="fa fa-wrench text-2xl text-primary"></i>
+                        <span class="text-xl font-bold text-gradient">工具总和</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        您的一站式工具和游戏平台，让数字生活更加便捷和有趣。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">快速链接</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-400 hover:text-primary transition-colors">首页</a></li>
+                        <li><a href="#tools" class="text-gray-400 hover:text-primary transition-colors">工具集</a></li>
+                        <li><a href="#snake-game" class="text-gray-400 hover:text-primary transition-colors">贪吃蛇游戏</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-primary transition-colors">关于我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">热门工具</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">像素艺术生成器</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">代码格式化工具</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">科学计算器</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">时间管理工具</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">联系我们</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-envelope text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">contact@toolcollection.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-phone text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">+1 (123) 456-7890</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">123 Tech Street, Digital City</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-500">© 2024 工具总和. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 贪吃蛇游戏 JavaScript -->
+    <script>
+        // 游戏常量
+        const GRID_SIZE = 20;
+        const CELL_SIZE = 30;
+        const CANVAS_WIDTH = GRID_SIZE * CELL_SIZE;
+        const CANVAS_HEIGHT = GRID_SIZE * CELL_SIZE;
+        
+        // 颜色配置
+        const SNAKE_COLORS = [
+            '#FF0000', // 红
+            '#FF7F00', // 橙
+            '#FFFF00', // 黄
+            '#00FF00', // 绿
+            '#0000FF', // 蓝
+            '#800080'  // 紫
+        ];
+        const FOOD_COLORS = ['#FFFF00', '#FFA500']; // 黄色到橙色
+        
+        // 游戏变量
+        let snake = [];
+        let food = {};
+        let direction = 'right';
+        let nextDirection = 'right';
+        let score = 0;
+        let gameSpeed = 150;
+        let gameInterval;
+        let foodBlinkState = 0;
+        let foodBlinkInterval;
+        
+        // 获取DOM元素
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
+        const finalScoreElement = document.getElementById('finalScore');
+        const gameOverElement = document.getElementById('gameOver');
+        const restartBtn = document.getElementById('restartBtn');
+        const directionBtns = document.querySelectorAll('.direction-btn');
+        
+        // 设置画布大小
+        canvas.width = CANVAS_WIDTH;
+        canvas.height = CANVAS_HEIGHT;
+        
+        // 初始化游戏
+        function initGame() {
+            // 重置蛇
+            snake = [
+                { x: 10, y: 10 },
+                { x: 9, y: 10 },
+                { x: 8, y: 10 }
+            ];
+            
+            // 重置方向
+            direction = 'right';
+            nextDirection = 'right';
+            
+            // 重置分数
+            score = 0;
+            scoreElement.textContent = score;
+            
+            // 生成食物
+            generateFood();
+            
+            // 隐藏游戏结束界面
+            gameOverElement.classList.add('hidden');
+            
+            // 开始游戏循环
+            if (gameInterval) clearInterval(gameInterval);
+            gameInterval = setInterval(gameLoop, gameSpeed);
+            
+            // 开始食物闪烁效果
+            if (foodBlinkInterval) clearInterval(foodBlinkInterval);
+            foodBlinkInterval = setInterval(() => {
+                foodBlinkState = (foodBlinkState + 1) % 2;
+            }, 500);
+        }
+        
+        // 生成食物
+        function generateFood() {
+            let newFood;
+            let isOnSnake;
+            
+            do {
+                isOnSnake = false;
+                newFood = {
+                    x: Math.floor(Math.random() * GRID_SIZE),
+                    y: Math.floor(Math.random() * GRID_SIZE)
+                };
+                
+                // 检查食物是否在蛇身上
+                for (let segment of snake) {
+                    if (segment.x === newFood.x && segment.y === newFood.y) {
+                        isOnSnake = true;
+                        break;
+                    }
+                }
+            } while (isOnSnake);
+            
+            food = newFood;
+        }
+        
+        // 游戏主循环
+        function gameLoop() {
+            // 更新方向
+            direction = nextDirection;
+            
+            // 获取蛇头
+            const head = { ...snake[0] };
+            
+            // 根据方向移动蛇头
+            switch (direction) {
+                case 'up':
+                    head.y = (head.y - 1 + GRID_SIZE) % GRID_SIZE;
+                    break;
+                case 'down':
+                    head.y = (head.y + 1) % GRID_SIZE;
+                    break;
+                case 'left':
+                    head.x = (head.x - 1 + GRID_SIZE) % GRID_SIZE;
+                    break;
+                case 'right':
+                    head.x = (head.x + 1) % GRID_SIZE;
+                    break;
+            }
+            
+            // 检查是否撞到自己
+            for (let segment of snake) {
+                if (segment.x === head.x && segment.y === head.y) {
+                    gameOver();
+                    return;
+                }
+            }
+            
+            // 将新头部添加到蛇
+            snake.unshift(head);
+            
+            // 检查是否吃到食物
+            if (head.x === food.x && head.y === food.y) {
+                // 增加分数
+                score += 10;
+                scoreElement.textContent = score;
+                
+                // 生成新食物
+                generateFood();
+                
+                // 创建像素爆炸效果
+                createExplosion(food.x * CELL_SIZE + CELL_SIZE / 2, food.y * CELL_SIZE + CELL_SIZE / 2);
+                
+                // 每50分增加游戏速度
+                if (score % 50 === 0 && gameSpeed > 80) {
+                    gameSpeed -= 10;
+                    clearInterval(gameInterval);
+                    gameInterval = setInterval(gameLoop, gameSpeed);
+                }
+            } else {
+                // 如果没吃到食物，移除尾部
+                snake.pop();
+            }
+            
+            // 绘制游戏
+            drawGame();
+        }
+        
+        // 绘制游戏
+        function drawGame() {
+            // 清空画布
+            ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            
+            // 绘制网格背景
+            drawGrid();
+            
+            // 绘制蛇
+            drawSnake();
+            
+            // 绘制食物
+            drawFood();
+        }
+        
+        // 绘制网格背景
+        function drawGrid() {
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.lineWidth = 1;
+            
+            // 绘制垂直线
+            for (let x = 0; x <= GRID_SIZE; x++) {
+                ctx.beginPath();
+                ctx.moveTo(x * CELL_SIZE, 0);
+                ctx.lineTo(x * CELL_SIZE, CANVAS_HEIGHT);
+                ctx.stroke();
+            }
+            
+            // 绘制水平线
+            for (let y = 0; y <= GRID_SIZE; y++) {
+                ctx.beginPath();
+                ctx.moveTo(0, y * CELL_SIZE);
+                ctx.lineTo(CANVAS_WIDTH, y * CELL_SIZE);
+                ctx.stroke();
+            }
+        }
+        
+        // 绘制蛇
+        function drawSnake() {
+            for (let i = 0; i < snake.length; i++) {
+                const segment = snake[i];
+                const colorIndex = Math.floor(score / 50) % SNAKE_COLORS.length;
+                const color = SNAKE_COLORS[colorIndex];
+                
+                // 绘制蛇身
+                ctx.fillStyle = color;
+                ctx.fillRect(segment.x * CELL_SIZE, segment.y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1);
+                
+                // 添加半调图案
+                drawHalftonePattern(segment.x * CELL_SIZE, segment.y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1, i % 4);
+            }
+        }
+        
+        // 绘制食物
+        function drawFood() {
+            const color = FOOD_COLORS[foodBlinkState];
+            
+            // 绘制食物
+            ctx.fillStyle = color;
+            ctx.fillRect(food.x * CELL_SIZE, food.y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1);
+            
+            // 添加半调图案
+            drawHalftonePattern(food.x * CELL_SIZE, food.y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1, 0, 2);
+        }
+        
+        // 绘制半调图案
+        function drawHalftonePattern(x, y, width, height, patternType, dotSize = 1) {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            
+            switch (patternType) {
+                case 0: // 点状图案
+                    for (let i = 0; i < width; i += 4) {
+                        for (let j = 0; j < height; j += 4) {
+                            ctx.beginPath();
+                            ctx.arc(x + i, y + j, dotSize, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    }
+                    break;
+                case 1: // 斜线图案
+                    for (let i = 0; i < width + height; i += 6) {
+                        ctx.beginPath();
+                        ctx.moveTo(x + Math.max(0, i - height), y + Math.min(i, height));
+                        ctx.lineTo(x + Math.min(i, width), y + Math.max(0, i - width));
+                        ctx.lineWidth = dotSize;
+                        ctx.stroke();
+                    }
+                    break;
+                case 2: // 交叉线图案
+                    for (let i = 0; i < width + height; i += 8) {
+                        // 正斜线
+                        ctx.beginPath();
+                        ctx.moveTo(x + Math.max(0, i - height), y + Math.min(i, height));
+                        ctx.lineTo(x + Math.min(i, width), y + Math.max(0, i - width));
+                        ctx.lineWidth = dotSize;
+                        ctx.stroke();
+                        
+                        // 反斜线
+                        ctx.beginPath();
+                        ctx.moveTo(x + Math.min(i, width), y + Math.min(i, height));
+                        ctx.lineTo(x + Math.max(0, width - i), y + Math.min(i, height));
+                        ctx.lineWidth = dotSize;
+                        ctx.stroke();
+                    }
+                    break;
+                case 3: // 方格图案
+                    for (let i = 0; i < width; i += 6) {
+                        for (let j = 0; j < height; j += 6) {
+                            ctx.fillRect(x + i, y + j, 3, 3);
+                        }
+                    }
+                    break;
+            }
+        }
+        
+        // 创建像素爆炸效果
+        function createExplosion(x, y) {
+            const particles = [];
+            const particleCount = 10;
+            
+            // 创建粒子
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: (Math.random() - 0.5) * 10,
+                    life: 30,
+                    maxLife: 30,
+                    color: SNAKE_COLORS[Math.floor(Math.random() * SNAKE_COLORS.length)]
+                });
+            }
+            
+            // 粒子动画
+            function animateParticles() {
+                // 更新和绘制粒子
+                let activeParticles = false;
+                
+                for (let particle of particles) {
+                    if (particle.life > 0) {
+                        activeParticles = true;
+                        
+                        // 更新位置
+                        particle.x += particle.vx;
+                        particle.y += particle.vy;
+                        
+                        // 减少生命值
+                        particle.life--;
+                        
+                        // 绘制粒子
+                        const alpha = particle.life / particle.maxLife;
+                        ctx.fillStyle = particle.color + Math.floor(alpha * 255).toString(16).padStart(2, '0');
+                        ctx.fillRect(particle.x, particle.y, 4, 4);
+                    }
+                }
+                
+                // 如果还有活跃粒子，继续动画
+                if (activeParticles) {
+                    requestAnimationFrame(animateParticles);
+                }
+            }
+            
+            animateParticles();
+        }
+        
+        // 游戏结束
+        function gameOver() {
+            // 停止游戏循环
+            clearInterval(gameInterval);
+            clearInterval(foodBlinkInterval);
+            
+            // 显示最终分数
+            finalScoreElement.textContent = score;
+            
+            // 显示游戏结束界面
+            gameOverElement.classList.remove('hidden');
+        }
+        
+        // 键盘控制
+        document.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowUp':
+                    if (direction !== 'down') nextDirection = 'up';
+                    break;
+                case 'ArrowDown':
+                    if (direction !== 'up') nextDirection = 'down';
+                    break;
+                case 'ArrowLeft':
+                    if (direction !== 'right') nextDirection = 'left';
+                    break;
+                case 'ArrowRight':
+                    if (direction !== 'left') nextDirection = 'right';
+                    break;
+            }
+        });
+        
+        // 触摸屏控制
+        directionBtns.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                switch (index) {
+                    case 0: // 上
+                        if (direction !== 'down') nextDirection = 'up';
+                        break;
+                    case 1: // 左
+                        if (direction !== 'right') nextDirection = 'left';
+                        break;
+                    case 2: // 下
+                        if (direction !== 'up') nextDirection = 'down';
+                        break;
+                    case 3: // 右
+                        if (direction !== 'left') nextDirection = 'right';
+                        break;
+                }
+            });
+        });
+        
+        // 重新开始按钮
+        restartBtn.addEventListener('click', initGame);
+        
+        // 初始化AOS动画库
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({
+                duration: 800,
+                once: true
+            });
+            
+            // 初始化游戏
+            initGame();
+        });
+        
+        // 移动端菜单切换
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 如果是移动端，点击后关闭菜单
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
